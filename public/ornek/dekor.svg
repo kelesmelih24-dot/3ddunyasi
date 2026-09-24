@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+<defs><pattern id="L" width="8" height="4" patternUnits="userSpaceOnUse"><rect width="8" height="4" fill="#1F3563"/><rect y="3" width="8" height="1" fill="#14213D"/></pattern><pattern id="O" width="8" height="4" patternUnits="userSpaceOnUse"><rect width="8" height="4" fill="#EA6A12"/><rect y="3" width="8" height="1" fill="#C9560A"/></pattern><pattern id="G" width="8" height="4" patternUnits="userSpaceOnUse"><rect width="8" height="4" fill="#A9BADB"/><rect y="3" width="8" height="1" fill="#8FA3CC"/></pattern></defs>
+<rect width="400" height="400" fill="#EEF2F9"/>
+<rect y="330" width="400" height="70" fill="#D5DEEE"/>
+<path d="M150 330c-10-60 10-110 20-150-20-30-10-70 30-80 40 10 50 50 30 80 10 40 30 90 20 150Z" fill="url(#L)"/><path d="M200 100c-10-30 10-50 30-60M200 100c10-40-10-60-30-70" stroke="#EA6A12" stroke-width="6" fill="none" stroke-linecap="round"/></svg>
