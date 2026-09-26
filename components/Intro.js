@@ -10,8 +10,6 @@ const SOGUMA = 550;      // turuncudan laciverte dönüş gecikmesi (ms)
 const BEKLE = 350;       // yazı bitince bekleme
 const ACILMA = 750;      // perdenin ikiye açılma süresi
 
-function bugun() { return new Date().toISOString().slice(0, 10); }
-
 // Web Audio ile sentezlenen hafif step motoru sesi (dosya gerekmez)
 function motorSesi() {
   const Ctx = window.AudioContext || window.webkitAudioContext;
@@ -38,7 +36,6 @@ export default function Intro() {
 
   useEffect(() => {
     if (document.documentElement.classList.contains('intro-yok')) return setDurum('bitti');
-    try { localStorage.setItem('intro-gun', bugun()); } catch {}
     setDurum('ciziyor');
   }, []);
 

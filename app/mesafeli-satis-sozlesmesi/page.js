@@ -9,7 +9,7 @@ export default async function Page() {
       <p><b>Satıcı:</b> [Satıcı unvanı / ad soyad], [Vergi dairesi ve numarası], {s.address}, {s.contact_phone}, {s.contact_email}</p>
       <p><b>Alıcı:</b> Sipariş sırasında bilgileri girilen üye.</p>
       <h2>2. Konu</h2>
-      <p>Bu sözleşme, alıcının satıcıya ait 3ddunyasi.com internet sitesinden elektronik ortamda sipariş verdiği ürünlerin satışı ve teslimi ile ilgili olarak 6502 sayılı Tüketicinin Korunması Hakkında Kanun ve Mesafeli Sözleşmeler Yönetmeliği hükümleri gereğince tarafların hak ve yükümlülüklerini düzenler.</p>
+      <p>Bu sözleşme, alıcının satıcıya ait 3ddunyasi.com.tr internet sitesinden elektronik ortamda sipariş verdiği ürünlerin satışı ve teslimi ile ilgili olarak 6502 sayılı Tüketicinin Korunması Hakkında Kanun ve Mesafeli Sözleşmeler Yönetmeliği hükümleri gereğince tarafların hak ve yükümlülüklerini düzenler.</p>
       <h2>3. Ürün, fiyat ve ödeme</h2>
       <p>Ürünlerin türü, adedi, satış fiyatı, kargo ücreti ve ödeme şekli sipariş özetinde ve alıcıya gönderilen sipariş onay e-postasında belirtildiği gibidir. Fiyatlara KDV dahildir.</p>
       <h2>4. Teslimat</h2>

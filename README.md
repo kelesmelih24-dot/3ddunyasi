@@ -47,15 +47,15 @@ git push -u origin main
 
 1. [vercel.com](https://vercel.com) → **Add New → Project** → GitHub deponuzu seçin.
 2. **Environment Variables** bölümüne `.env.example` içindeki değişkenleri girin. İlk etapta şu dördü yeterli:
-   `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_SITE_URL=https://3ddunyasi.com`
+   `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_SITE_URL=https://3ddunyasi.com.tr`
 3. **Deploy**.
-4. **Settings → Domains** → `3ddunyasi.com` ve `www.3ddunyasi.com` ekleyin. Vercel'in gösterdiği DNS kayıtlarını alan adını aldığınız firmanın panelinde girin.
+4. **Settings → Domains** → `3ddunyasi.com.tr` ve `www.3ddunyasi.com.tr` ekleyin. Vercel'in gösterdiği DNS kayıtlarını alan adını aldığınız firmanın panelinde girin.
 
 ### 4. Supabase giriş ayarları
 
 **Authentication → URL Configuration**
-- Site URL: `https://3ddunyasi.com`
-- Redirect URLs: `https://3ddunyasi.com/**` ve yerel test için `http://localhost:3000/**`
+- Site URL: `https://3ddunyasi.com.tr`
+- Redirect URLs: `https://3ddunyasi.com.tr/**` ve yerel test için `http://localhost:3000/**`
 
 **Google ile giriş**
 1. [Google Cloud Console](https://console.cloud.google.com) → yeni proje → **APIs & Services → OAuth consent screen** (External) doldurun.
@@ -77,7 +77,7 @@ Sayfayı yenileyince hesap menüsünde **Yönetim paneli** görünür. İlk iş 
 
 ### 6. E-posta gönderimi (Resend)
 
-1. [resend.com](https://resend.com) → hesap açın → **Domains** → `3ddunyasi.com` ekleyip DNS kayıtlarını girin.
+1. [resend.com](https://resend.com) → hesap açın → **Domains** → `3ddunyasi.com.tr` ekleyip DNS kayıtlarını girin.
 2. API key oluşturun. Vercel'e `RESEND_API_KEY`, `EMAIL_FROM` ve `ADMIN_EMAIL` ekleyip yeniden deploy edin.
 
 Anahtar girilmezse site çalışır, sadece e-posta gönderilmez.
@@ -146,5 +146,4 @@ Ana sayfadaki panellerin arkasında video oynatmak için aşağıdaki adlarla MP
 Dikey (9:16), sessiz, 5-8 saniyelik, döngüye uygun ve 4 MB altında videolar önerilir.
 
 ### Intro
-Nozul "3D Dünyası" yazısını el yazısıyla çizer, perde ikiye açılır. Günde bir kez gösterilir, "Geç" ile atlanabilir.
-Tekrar görmek için tarayıcıda gizli pencere açın. Yazıcı sesi, tarayıcı kuralları gereği ziyaretçi hoparlör düğmesine basınca çalar.
+Nozul "3D Dünyası" yazısını el yazısıyla çizer, perde ikiye açılır. Site her açıldığında (veya sayfa yenilendiğinde) gösterilir, "Geç" ile atlanabilir. Site içinde sayfalar arası geçişte tekrar oynamaz. Yazıcı sesi, tarayıcı kuralları gereği ziyaretçi hoparlör düğmesine basınca çalar.

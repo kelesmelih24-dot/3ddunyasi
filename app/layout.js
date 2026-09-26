@@ -23,8 +23,9 @@ export const metadata = {
 
 export const viewport = { themeColor: '#E8620C', width: 'device-width', initialScale: 1, viewportFit: 'cover' };
 
-// Tema ve intro kararı sayfa çizilmeden verilir (yanıp sönme olmaz). Intro günde bir kez oynar.
-const basBetik = `(function(){var h=document.documentElement;h.classList.add('js');try{if(localStorage.getItem('tema')==='koyu')h.classList.add('dark');var g=new Date().toISOString().slice(0,10);if(localStorage.getItem('intro-gun')===g||matchMedia('(prefers-reduced-motion: reduce)').matches)h.classList.add('intro-yok')}catch(e){h.classList.add('intro-yok')}})()`;
+// Tema ve intro kararı sayfa çizilmeden verilir (yanıp sönme olmaz). Intro site her açıldığında oynar;
+// sadece hareket azaltma ayarı açık olanlarda atlanır.
+const basBetik = `(function(){var h=document.documentElement;h.classList.add('js');try{if(localStorage.getItem('tema')==='koyu')h.classList.add('dark');if(matchMedia('(prefers-reduced-motion: reduce)').matches)h.classList.add('intro-yok')}catch(e){h.classList.add('intro-yok')}})()`;
 
 export default async function RootLayout({ children }) {
   let user = null, profile = null;

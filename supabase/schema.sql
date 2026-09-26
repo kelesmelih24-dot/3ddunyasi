@@ -42,7 +42,7 @@ create table if not exists public.settings (
   iban text default 'TR00 0000 0000 0000 0000 0000 00',
   account_holder text default 'Hesap sahibi',
   whatsapp text default '905421461450',
-  contact_email text default 'iletisim@3ddunyasi.com',
+  contact_email text default 'iletisim@3ddunyasi.com.tr',
   contact_phone text default '0542 146 14 50',
   address text default 'Ankara, Türkiye',
   instagram text default '3ddunyasi',
