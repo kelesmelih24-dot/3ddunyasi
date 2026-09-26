@@ -5,7 +5,7 @@ export default async function Page() {
   const s = await getSettings();
   return (
     <LegalPage title="Kişisel verilerin korunması aydınlatma metni">
-      <p>Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) uyarınca veri sorumlusu sıfatıyla 3ddünyası tarafından, kişisel verilerinizin hangi amaçlarla ve nasıl işlendiği hakkında sizi bilgilendirmek için hazırlanmıştır.</p>
+      <p>Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) uyarınca veri sorumlusu sıfatıyla 3D Dünyası tarafından, kişisel verilerinizin hangi amaçlarla ve nasıl işlendiği hakkında sizi bilgilendirmek için hazırlanmıştır.</p>
       <h2>Veri sorumlusu</h2>
       <p>[Satıcı unvanı / ad soyad], {s.address}. E-posta: {s.contact_email}</p>
       <h2>İşlenen kişisel veriler</h2>

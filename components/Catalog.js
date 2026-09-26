@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import ProductCard from './ProductCard';
+import Reveal from './Reveal';
 
 const SIRALAR = { yeni: ['created_at', false], 'fiyat-artan': ['price', true], 'fiyat-azalan': ['price', false], ad: ['name', true] };
 
@@ -33,10 +34,13 @@ export default async function Catalog({ section, title, intro, basePath, searchP
 
   return (
     <div className="kap py-10">
-      <h1 className="text-3xl font-bold sm:text-4xl">{aktifKat?.name || title}</h1>
-      <p className="soluk mt-2 max-w-2xl leading-7">{intro}</p>
+      <div className="rounded-[28px] bg-krem px-6 py-10 dark:bg-lacivert-900 sm:px-10 sm:py-12">
+        <p className="ust-etiket">{aktifKat ? title : 'Koleksiyon'}</p>
+        <h1 className="mt-2 text-4xl font-bold sm:text-5xl">{aktifKat?.name || title}</h1>
+        <p className="soluk mt-3 max-w-2xl leading-7">{intro}</p>
+      </div>
 
-      <div className="mt-8 grid gap-8 lg:grid-cols-[220px_1fr]">
+      <div className="mt-10 grid gap-10 lg:grid-cols-[230px_1fr]">
         <aside className="space-y-6">
           <form action={basePath} className="space-y-3">
             {kategori && <input type="hidden" name="kategori" value={kategori} />}
@@ -57,9 +61,9 @@ export default async function Catalog({ section, title, intro, basePath, searchP
           <nav aria-label="Kategoriler">
             <h2 className="mb-2 font-sans text-sm font-semibold">Kategoriler</h2>
             <ul className="space-y-0.5 text-sm">
-              <li><Link href={link({ kategori: '' })} className={`block rounded px-2 py-1.5 ${!aktifKat ? 'bg-lacivert-800 text-white dark:bg-lacivert-100 dark:text-lacivert-900' : 'hover:bg-lacivert-50 dark:hover:bg-lacivert-800'}`}>Tümü</Link></li>
+              <li><Link href={link({ kategori: '' })} className={`block rounded-lg px-3 py-2 ${!aktifKat ? 'bg-nozul-50 font-semibold text-nozul-700 dark:bg-nozul-700/20 dark:text-nozul-300' : 'hover:bg-lacivert-50 dark:hover:bg-lacivert-800'}`}>Tümü</Link></li>
               {categories?.map((c) => (
-                <li key={c.id}><Link href={link({ kategori: c.slug })} className={`block rounded px-2 py-1.5 ${aktifKat?.id === c.id ? 'bg-lacivert-800 text-white dark:bg-lacivert-100 dark:text-lacivert-900' : 'hover:bg-lacivert-50 dark:hover:bg-lacivert-800'}`}>{c.name}</Link></li>
+                <li key={c.id}><Link href={link({ kategori: c.slug })} className={`block rounded-lg px-3 py-2 ${aktifKat?.id === c.id ? 'bg-nozul-50 font-semibold text-nozul-700 dark:bg-nozul-700/20 dark:text-nozul-300' : 'hover:bg-lacivert-50 dark:hover:bg-lacivert-800'}`}>{c.name}</Link></li>
               ))}
             </ul>
           </nav>
@@ -68,8 +72,8 @@ export default async function Catalog({ section, title, intro, basePath, searchP
         <section>
           <p className="soluk mb-4 text-sm">{products?.length || 0} ürün{q ? `, "${q}" araması` : ''}</p>
           {products?.length ? (
-            <div className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3">
-              {products.map((p) => <ProductCard key={p.id} p={p} rating={rMap[p.id]} />)}
+            <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6">
+              {products.map((p, i) => <Reveal key={p.id} delay={(i % 3) * 80}><ProductCard p={p} rating={rMap[p.id]} /></Reveal>)}
             </div>
           ) : (
             <div className="kutu p-10 text-center">

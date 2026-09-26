@@ -1,4 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" preserveAspectRatio="xMidYMid slice">
-<defs><pattern id="L" width="8" height="6" patternUnits="userSpaceOnUse"><rect width="8" height="6" fill="#1F3563"/><rect y="5" width="8" height="1" fill="#14213D"/></pattern><pattern id="O" width="8" height="6" patternUnits="userSpaceOnUse"><rect width="8" height="6" fill="#EA6A12"/><rect y="5" width="8" height="1" fill="#C9560A"/></pattern><pattern id="G" width="8" height="6" patternUnits="userSpaceOnUse"><rect width="8" height="6" fill="#4D6699"/><rect y="5" width="8" height="1" fill="#1F3563"/></pattern><pattern id="W" width="8" height="6" patternUnits="userSpaceOnUse"><rect width="8" height="6" fill="#D5DEEE"/><rect y="5" width="8" height="1" fill="#A9BADB"/></pattern></defs>
-<rect width="600" height="800" fill="#0B1426"/>
-<rect x="170" y="600" width="260" height="40" fill="url(#G)"/><path d="M300 180 420 280 400 460 300 600 200 460 180 280Z" fill="url(#W)"/><path d="M300 180 420 280 300 330 180 280Z" fill="url(#O)"/><rect x="250" y="80" width="100" height="60" fill="url(#G)"/><path d="M300 140v36" stroke="#EA6A12" stroke-width="8"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" preserveAspectRatio="xMidYMin slice"><defs><pattern id="W" width="8" height="6" patternUnits="userSpaceOnUse"><rect width="8" height="6" fill="#FFF5ED"/><rect y="4.8" width="8" height="1.2" fill="#F5D9C2"/></pattern><pattern id="N" width="8" height="6" patternUnits="userSpaceOnUse"><rect width="8" height="6" fill="#13254A"/><rect y="4.8" width="8" height="1.2" fill="#0D1A35"/></pattern><pattern id="S" width="8" height="6" patternUnits="userSpaceOnUse"><rect width="8" height="6" fill="#F7A56B"/><rect y="4.8" width="8" height="1.2" fill="#EE8A45"/></pattern></defs><rect width="600" height="800" fill="#E8620C"/>
+<ellipse cx="300" cy="468" rx="190" ry="26" fill="#C95209" opacity=".55"/>
+<rect x="150" y="430" width="300" height="36" rx="4" fill="url(#S)"/>
+<path d="M300 150 408 238 390 400 300 430 210 400 192 238Z" fill="url(#W)"/>
+<path d="M300 150 408 238 300 282 192 238Z" fill="#FFFFFF"/>
+<path d="M300 282 408 238 390 400 300 430Z" fill="#F3D5BC" opacity=".55"/>
+<circle cx="266" cy="300" r="9" fill="#13254A"/><circle cx="334" cy="300" r="9" fill="#13254A"/>
+<rect x="258" y="40" width="84" height="26" rx="4" fill="#13254A"/>
+<path d="M272 66h56l-14 34h-28Z" fill="#13254A"/>
+<rect x="294" y="100" width="12" height="24" fill="#FFF5ED"/>
+<rect x="296" y="124" width="8" height="26" fill="#FFFFFF" opacity=".9"/></svg>

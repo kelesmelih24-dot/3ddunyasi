@@ -1,4 +1,4 @@
-# 3ddünyası
+# 3D Dünyası
 
 Next.js 14 + Tailwind + Supabase ile yazılmış e-ticaret sitesi. GitHub'a yüklenip Vercel'de yayınlanır.
 
@@ -35,7 +35,7 @@ Fiyat, stok ve kupon hesabı veritabanında (`place_order` fonksiyonu) yapılır
 cd 3ddunyasi
 git init
 git add .
-git commit -m "3ddünyası ilk sürüm"
+git commit -m "3D Dünyası ilk sürüm"
 git branch -M main
 git remote add origin https://github.com/KULLANICI_ADINIZ/3ddunyasi.git
 git push -u origin main

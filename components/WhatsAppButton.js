@@ -1,6 +1,6 @@
 export default function WhatsAppButton({ number }) {
   if (!number) return null;
-  const text = encodeURIComponent('Merhaba, 3ddünyası sitesinden yazıyorum.');
+  const text = encodeURIComponent('Merhaba, 3D Dünyası sitesinden yazıyorum.');
   return (
     <a href={`https://wa.me/${number.replace(/\D/g, '')}?text=${text}`} target="_blank" rel="noreferrer"
       aria-label="WhatsApp ile destek alın"

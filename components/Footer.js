@@ -1,46 +1,48 @@
 import Link from 'next/link';
 import Logo from './Logo';
 
+const GRUPLAR = [
+  ['Alışveriş', [['/baski-urunleri', 'Baskı ürünleri'], ['/malzemeler', 'Malzemeler'], ['/ozel-siparis', 'Özel sipariş'], ['/siparis-takip', 'Sipariş takibi']]],
+  ['Kurumsal', [['/hakkimizda', 'Hakkımızda'], ['/iletisim', 'İletişim'], ['/iade-ve-degisim', 'İade ve değişim']]],
+  ['Yasal', [['/kvkk', 'KVKK aydınlatma metni'], ['/mesafeli-satis-sozlesmesi', 'Mesafeli satış sözleşmesi'], ['/cerez-politikasi', 'Çerez politikası']]],
+];
+
 export default function Footer({ settings }) {
   return (
-    <footer className="mt-20 border-t border-lacivert-100 bg-white dark:border-lacivert-800 dark:bg-lacivert-900">
-      <div className="kap grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
+    <footer className="mt-28 bg-lacivert-800 text-white dark:bg-lacivert-900">
+      <div className="h-1.5 bg-nozul-500" />
+      <div className="kap grid gap-12 py-16 lg:grid-cols-[1.3fr_2fr]">
         <div>
-          <Logo />
-          <p className="soluk mt-3 max-w-xs text-sm leading-6">Kendi atölyemizde tasarlayıp bastığımız ürünler ve 3D baskı projeleriniz için malzemeler.</p>
-        </div>
-        <div>
-          <h3 className="mb-3 text-sm font-semibold">Alışveriş</h3>
-          <ul className="soluk space-y-2 text-sm">
-            <li><Link href="/baski-urunleri" className="hover:text-nozul-500">Baskı ürünleri</Link></li>
-            <li><Link href="/malzemeler" className="hover:text-nozul-500">Malzemeler</Link></li>
-            <li><Link href="/ozel-siparis" className="hover:text-nozul-500">Özel sipariş</Link></li>
-            <li><Link href="/siparis-takip" className="hover:text-nozul-500">Sipariş takibi</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h3 className="mb-3 text-sm font-semibold">Kurumsal</h3>
-          <ul className="soluk space-y-2 text-sm">
-            <li><Link href="/hakkimizda" className="hover:text-nozul-500">Hakkımızda</Link></li>
-            <li><Link href="/iletisim" className="hover:text-nozul-500">İletişim</Link></li>
-            <li><Link href="/kvkk" className="hover:text-nozul-500">KVKK aydınlatma metni</Link></li>
-            <li><Link href="/mesafeli-satis-sozlesmesi" className="hover:text-nozul-500">Mesafeli satış sözleşmesi</Link></li>
-            <li><Link href="/iade-ve-degisim" className="hover:text-nozul-500">İade ve değişim</Link></li>
-            <li><Link href="/cerez-politikasi" className="hover:text-nozul-500">Çerez politikası</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h3 className="mb-3 text-sm font-semibold">İletişim</h3>
-          <ul className="soluk space-y-2 text-sm">
-            {settings.contact_email && <li><a href={`mailto:${settings.contact_email}`} className="hover:text-nozul-500">{settings.contact_email}</a></li>}
+          <Logo inverse id="ftr" />
+          <p className="mt-5 max-w-xs text-sm leading-6 text-white/70">Kendi atölyemizde tasarlayıp bastığımız ürünler ve 3D baskı projeleriniz için özenle seçilmiş malzemeler.</p>
+          <ul className="mt-6 space-y-1.5 text-sm text-white/80">
+            {settings.contact_email && <li><a href={`mailto:${settings.contact_email}`} className="hover:text-nozul-300">{settings.contact_email}</a></li>}
             {settings.contact_phone && <li>{settings.contact_phone}</li>}
             {settings.address && <li>{settings.address}</li>}
-            {settings.instagram && <li><a href={`https://instagram.com/${settings.instagram}`} target="_blank" rel="noreferrer" className="hover:text-nozul-500">Instagram: @{settings.instagram}</a></li>}
           </ul>
+          {settings.instagram && (
+            <a href={`https://instagram.com/${settings.instagram}`} target="_blank" rel="noreferrer" aria-label="Instagram"
+              className="mt-6 inline-grid h-11 w-11 place-items-center rounded-full border border-white/20 transition-colors hover:border-nozul-500 hover:bg-nozul-500">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+            </a>
+          )}
+        </div>
+        <div className="grid gap-10 sm:grid-cols-3">
+          {GRUPLAR.map(([b, l]) => (
+            <div key={b}>
+              <h3 className="font-sans text-xs font-bold uppercase tracking-etiket text-nozul-300">{b}</h3>
+              <ul className="mt-4 space-y-2.5 text-sm text-white/80">
+                {l.map(([h, t]) => <li key={h}><Link href={h} className="transition-colors hover:text-white">{t}</Link></li>)}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
-      <div className="border-t border-lacivert-100 py-5 text-center text-xs soluk dark:border-lacivert-800">
-        © {new Date().getFullYear()} 3ddünyası. Tüm hakları saklıdır.
+      <div className="border-t border-white/10">
+        <div className="kap flex flex-wrap items-center justify-between gap-3 py-6 text-xs text-white/60">
+          <p>© {new Date().getFullYear()} 3D Dünyası. Tüm hakları saklıdır.</p>
+          <p>Güvenli ödeme · Havale/EFT</p>
+        </div>
       </div>
     </footer>
   );

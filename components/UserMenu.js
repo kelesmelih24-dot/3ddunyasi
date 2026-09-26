@@ -14,7 +14,7 @@ export default function UserMenu({ user, isAdmin }) {
     return () => document.removeEventListener('click', close);
   }, []);
 
-  if (!user) return <Link href="/giris" className="btn-koyu ml-1 py-2">Giriş yap</Link>;
+  if (!user) return <Link href="/giris" className="btn-koyu ml-1 whitespace-nowrap px-4 py-2">Giriş yap</Link>;
 
   async function cikis() {
     await createClient().auth.signOut();
@@ -24,7 +24,7 @@ export default function UserMenu({ user, isAdmin }) {
   return (
     <div className="relative" ref={ref}>
       <button onClick={() => setOpen(!open)} aria-expanded={open} aria-label="Hesap menüsü"
-        className="rounded-md p-2 hover:bg-lacivert-50 dark:hover:bg-lacivert-800">
+        className="rounded-full p-2.5 hover:bg-lacivert-50 dark:hover:bg-lacivert-800">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
       </button>
       {open && (
