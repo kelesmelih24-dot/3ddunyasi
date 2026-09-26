@@ -42,7 +42,7 @@ export default function Page() {
   useEffect(() => { load(); }, []);
   return (
     <div>
-      <h1 className="text-3xl font-bold">Özel sipariş talepleri</h1>
+      <h1 className="text-3xl font-semibold">Özel sipariş talepleri</h1>
       <p className="soluk mb-5 mt-1 text-sm">Teklif fiyatı ve notu müşteri Hesabım sayfasında görür. Teklifi ayrıca e-posta veya WhatsApp ile iletmenizi öneririz.</p>
       {list === null ? <p className="soluk">Yükleniyor…</p> : list.length === 0 ? <p className="kutu soluk p-6">Henüz talep yok.</p> : (
         <ul className="space-y-4">{list.map((t) => <Talep key={t.id} t={t} onSaved={load} />)}</ul>

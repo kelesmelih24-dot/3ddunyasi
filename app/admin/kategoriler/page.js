@@ -28,7 +28,7 @@ export default function Page() {
   }
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Kategoriler</h1>
+      <h1 className="text-3xl font-semibold">Kategoriler</h1>
       <form onSubmit={ekle} className="kutu flex flex-wrap items-end gap-3 p-5">
         <div><label className="etiket" htmlFor="b">Bölüm</label><select id="b" className="girdi" value={section} onChange={(e) => setSection(e.target.value)}>{Object.entries(BOLUMLER).map(([k, v]) => <option key={k} value={k}>{v.ad}</option>)}</select></div>
         <div className="flex-1"><label className="etiket" htmlFor="n">Kategori adı</label><input id="n" className="girdi" value={name} onChange={(e) => { setName(e.target.value); setErr(''); }} /></div>

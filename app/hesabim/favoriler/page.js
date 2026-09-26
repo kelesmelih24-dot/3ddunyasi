@@ -12,7 +12,7 @@ export default async function Page() {
   const products = (data || []).map((d) => d.products).filter(Boolean);
   return (
     <div className="kap py-10">
-      <h1 className="mb-6 text-3xl font-bold">Hesabım</h1>
+      <h1 className="mb-6 text-3xl font-semibold">Hesabım</h1>
       <AccountNav active="/hesabim/favoriler" />
       {products.length ? (
         <div className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-4">{products.map((p) => <ProductCard key={p.id} p={p} />)}</div>

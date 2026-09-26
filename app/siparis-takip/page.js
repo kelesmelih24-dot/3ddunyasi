@@ -18,7 +18,7 @@ export default function Page() {
   }
   return (
     <div className="kap max-w-lg py-14">
-      <h1 className="text-3xl font-bold">Sipariş takibi</h1>
+      <h1 className="text-3xl font-semibold">Sipariş takibi</h1>
       <p className="soluk mt-2">Sipariş numaranız onay e-postasında yer alır (örnek: 3DD-A1B2C3D4).</p>
       <form onSubmit={sorgula} className="mt-8 space-y-4">
         <div><label htmlFor="no" className="etiket">Sipariş numarası</label><input id="no" value={no} onChange={(e) => setNo(e.target.value.toUpperCase())} className="girdi" /></div>

@@ -126,3 +126,25 @@ lib/                 Supabase bağlantıları, e-posta, iyzico, yardımcılar
 public/              logo, açılış ve örnek ürün görselleri
 supabase/            schema.sql ve seed.sql
 ```
+
+---
+
+## Güncelleme 2: Yeni intro, video paneller, bülten ve galeri
+
+### Veritabanını güncelleyin (bir kez)
+Supabase → SQL Editor → New query → `supabase/guncelleme-2.sql` dosyasının içeriğini yapıştırıp **Run**.
+Bu işlem açılış tarihi alanını, bülten ve galeri tablolarını ekler; telefon numarasını 0542 146 14 50 yapar.
+
+### Admin panelinde yapılacaklar
+- **Mağaza ayarları → Açılış tarihi:** Tarih girerseniz ana sayfada geri sayım başlar.
+- **Galeri:** Atölye fotoğrafları ve Instagram gönderileri ekleyin. Boş bölümler sitede görünmez.
+- **Bülten aboneleri:** Açılış için e-posta bırakanları görün, CSV olarak indirin.
+
+### Panel videoları
+Ana sayfadaki panellerin arkasında video oynatmak için aşağıdaki adlarla MP4 dosyalarını `public/video/` klasörüne koyun:
+`baski.mp4`, `malzeme.mp4`, `yazici.mp4`. Dosya yoksa panelde çizim görünür, site bozulmaz.
+Dikey (9:16), sessiz, 5-8 saniyelik, döngüye uygun ve 4 MB altında videolar önerilir.
+
+### Intro
+Nozul "3D Dünyası" yazısını el yazısıyla çizer, perde ikiye açılır. Günde bir kez gösterilir, "Geç" ile atlanabilir.
+Tekrar görmek için tarayıcıda gizli pencere açın. Yazıcı sesi, tarayıcı kuralları gereği ziyaretçi hoparlör düğmesine basınca çalar.

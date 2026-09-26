@@ -31,7 +31,7 @@ export default function Page() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Kuponlar</h1>
+      <h1 className="text-3xl font-semibold">Kuponlar</h1>
       <form onSubmit={ekle} className="kutu grid gap-3 p-5 sm:grid-cols-3">
         <div><label className="etiket" htmlFor="c">Kupon kodu</label><input id="c" className="girdi" value={f.code} onChange={(e) => { setF({ ...f, code: e.target.value.toUpperCase().replace(/\s/g, '') }); setErr(''); }} placeholder="YAZ20" /></div>
         <div><label className="etiket" htmlFor="t">Tür</label><select id="t" className="girdi" value={f.type} onChange={set('type')}><option value="yuzde">Yüzde (%)</option><option value="tutar">Sabit tutar (TL)</option></select></div>

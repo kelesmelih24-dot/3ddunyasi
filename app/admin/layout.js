@@ -7,7 +7,7 @@ export const metadata = { title: 'Yönetim paneli', robots: { index: false } };
 const MENU = [
   ['/admin', 'Genel bakış'], ['/admin/siparisler', 'Siparişler'], ['/admin/urunler', 'Ürünler ve stok'],
   ['/admin/kategoriler', 'Kategoriler'], ['/admin/kuponlar', 'Kuponlar'], ['/admin/ozel-talepler', 'Özel talepler'],
-  ['/admin/musteriler', 'Müşteriler'], ['/admin/yorumlar', 'Yorumlar'], ['/admin/ayarlar', 'Mağaza ayarları'],
+  ['/admin/musteriler', 'Müşteriler'], ['/admin/bulten', 'Bülten aboneleri'], ['/admin/galeri', 'Galeri'], ['/admin/yorumlar', 'Yorumlar'], ['/admin/ayarlar', 'Mağaza ayarları'],
 ];
 
 export default async function AdminLayout({ children }) {

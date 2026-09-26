@@ -12,7 +12,7 @@ export default async function Page({ searchParams }) {
   const { data: orders } = await q;
   return (
     <div>
-      <h1 className="text-3xl font-bold">Siparişler</h1>
+      <h1 className="text-3xl font-semibold">Siparişler</h1>
       <div className="my-5 flex flex-wrap gap-2 text-sm">
         <Link href="/admin/siparisler" className={`rounded-md px-3 py-1.5 ${!durum ? 'bg-lacivert-800 text-white dark:bg-lacivert-100 dark:text-lacivert-900' : 'btn-cizgi py-1.5'}`}>Tümü</Link>
         {Object.entries(DURUMLAR).map(([k, v]) => (

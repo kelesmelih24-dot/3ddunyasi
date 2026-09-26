@@ -12,7 +12,7 @@ export default async function Page({ searchParams }) {
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-3xl font-bold">Ürünler ve stok</h1>
+        <h1 className="text-3xl font-semibold">Ürünler ve stok</h1>
         <Link href="/admin/urunler/yeni" className="btn-ana">Yeni ürün ekle</Link>
       </div>
       <form className="my-5 flex flex-wrap gap-2">

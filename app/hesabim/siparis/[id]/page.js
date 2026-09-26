@@ -16,7 +16,7 @@ export default async function Page({ params }) {
   return (
     <div className="kap max-w-3xl py-10">
       <Link href="/hesabim" className="soluk text-sm hover:underline">Siparişlerim</Link>
-      <h1 className="mt-2 text-3xl font-bold">{o.order_no}</h1>
+      <h1 className="mt-2 text-3xl font-semibold">{o.order_no}</h1>
       <p className="soluk">{tarih(o.created_at)}</p>
 
       {o.status === 'iptal' ? <p className="hata mt-6">Bu sipariş iptal edildi.</p> : (

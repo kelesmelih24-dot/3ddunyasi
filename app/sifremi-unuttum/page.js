@@ -14,7 +14,7 @@ export default function Page() {
   }
   return (
     <form onSubmit={gonder} className="kap max-w-md space-y-4 py-14">
-      <h1 className="text-3xl font-bold">Şifremi unuttum</h1>
+      <h1 className="text-3xl font-semibold">Şifremi unuttum</h1>
       <p className="soluk">E-posta adresinizi girin, şifrenizi yenilemeniz için bir bağlantı gönderelim.</p>
       <input type="email" value={email} onChange={(e) => { setEmail(e.target.value); setErr(''); }} className="girdi" placeholder="ornek@eposta.com" aria-label="E-posta" />
       {err && <p className="hata">{err}</p>}

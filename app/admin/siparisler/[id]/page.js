@@ -12,7 +12,7 @@ export default async function Page({ params }) {
   return (
     <div className="space-y-6">
       <Link href="/admin/siparisler" className="soluk text-sm hover:underline">Siparişler</Link>
-      <h1 className="text-3xl font-bold">{o.order_no}</h1>
+      <h1 className="text-3xl font-semibold">{o.order_no}</h1>
       <p className="soluk -mt-4">{tarih(o.created_at)} · {o.email}</p>
       <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
         <div className="space-y-6">

@@ -13,8 +13,8 @@ module.exports = {
         krem: '#FBF7F3',
       },
       fontFamily: {
-        display: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
-        sans: ['"Manrope"', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+        display: ['"Unbounded"', 'system-ui', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
       },
       letterSpacing: { etiket: '0.14em' },
     },

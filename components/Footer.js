@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Logo from './Logo';
+import NewsletterForm from './NewsletterForm';
 
 const GRUPLAR = [
   ['Alışveriş', [['/baski-urunleri', 'Baskı ürünleri'], ['/malzemeler', 'Malzemeler'], ['/ozel-siparis', 'Özel sipariş'], ['/siparis-takip', 'Sipariş takibi']]],
@@ -11,13 +12,22 @@ export default function Footer({ settings }) {
   return (
     <footer className="mt-28 bg-lacivert-800 text-white dark:bg-lacivert-900">
       <div className="h-1.5 bg-nozul-500" />
+      <div className="border-b border-white/10">
+        <div className="kap grid items-center gap-6 py-10 md:grid-cols-2">
+          <div>
+            <h2 className="text-2xl font-semibold">Açılışı kaçırmayın</h2>
+            <p className="mt-2 text-sm text-white/70">Yeni ürünler ve kampanyalardan ilk siz haberdar olun.</p>
+          </div>
+          <NewsletterForm koyu />
+        </div>
+      </div>
       <div className="kap grid gap-12 py-16 lg:grid-cols-[1.3fr_2fr]">
         <div>
           <Logo inverse id="ftr" />
           <p className="mt-5 max-w-xs text-sm leading-6 text-white/70">Kendi atölyemizde tasarlayıp bastığımız ürünler ve 3D baskı projeleriniz için özenle seçilmiş malzemeler.</p>
           <ul className="mt-6 space-y-1.5 text-sm text-white/80">
             {settings.contact_email && <li><a href={`mailto:${settings.contact_email}`} className="hover:text-nozul-300">{settings.contact_email}</a></li>}
-            {settings.contact_phone && <li>{settings.contact_phone}</li>}
+            {settings.contact_phone && <li><a href={`tel:${settings.contact_phone.replace(/\s/g, '')}`} className="hover:text-nozul-300">{settings.contact_phone}</a></li>}
             {settings.address && <li>{settings.address}</li>}
           </ul>
           {settings.instagram && (
@@ -41,7 +51,10 @@ export default function Footer({ settings }) {
       <div className="border-t border-white/10">
         <div className="kap flex flex-wrap items-center justify-between gap-3 py-6 text-xs text-white/60">
           <p>© {new Date().getFullYear()} 3D Dünyası. Tüm hakları saklıdır.</p>
-          <p>Güvenli ödeme · Havale/EFT</p>
+          <p>
+            Made by{' '}
+            <a href="https://mksoftware.com.tr/" target="_blank" rel="noopener" className="font-bold text-white transition-colors hover:text-nozul-300">mksoftware</a>
+          </p>
         </div>
       </div>
     </footer>

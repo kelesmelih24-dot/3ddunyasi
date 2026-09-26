@@ -16,7 +16,7 @@ export default function Page() {
   }
   return (
     <form onSubmit={gonder} className="kap max-w-md space-y-4 py-14">
-      <h1 className="text-3xl font-bold">Yeni şifre belirleyin</h1>
+      <h1 className="text-3xl font-semibold">Yeni şifre belirleyin</h1>
       <input type="password" value={pw} onChange={(e) => { setPw(e.target.value); setErr(''); }} className="girdi" placeholder="En az 8 karakter" aria-label="Yeni şifre" autoComplete="new-password" />
       {err && <p className="hata">{err}</p>}
       <button className="btn-ana w-full">Şifreyi kaydet</button>

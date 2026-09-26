@@ -11,7 +11,7 @@ export default async function Page() {
   const { data: orders } = await supabase.from('orders').select('*').eq('user_id', user.id).order('created_at', { ascending: false });
   return (
     <div className="kap py-10">
-      <h1 className="mb-6 text-3xl font-bold">Hesabım</h1>
+      <h1 className="mb-6 text-3xl font-semibold">Hesabım</h1>
       <AccountNav active="/hesabim" />
       {!orders?.length ? (
         <div className="kutu p-10 text-center"><p className="font-semibold">Henüz siparişiniz yok</p><Link href="/baski-urunleri" className="btn-ana mt-4">Alışverişe başla</Link></div>

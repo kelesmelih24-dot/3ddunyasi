@@ -14,7 +14,7 @@ export default async function Page() {
   });
   return (
     <div>
-      <h1 className="mb-5 text-3xl font-bold">Müşteriler</h1>
+      <h1 className="mb-5 text-3xl font-semibold">Müşteriler</h1>
       <div className="kutu overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead className="soluk border-b border-lacivert-100 dark:border-lacivert-800"><tr><th className="p-3">Ad soyad</th><th className="p-3">E-posta</th><th className="p-3">Telefon</th><th className="p-3">Kayıt</th><th className="p-3">Sipariş</th><th className="p-3 text-right">Toplam harcama</th></tr></thead>

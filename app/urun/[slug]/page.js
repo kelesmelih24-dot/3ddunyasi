@@ -29,8 +29,18 @@ export default async function ProductPage({ params }) {
   const ort = reviews?.length ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1) : null;
   const bolum = BOLUMLER[p.section];
 
+  const SITE = process.env.NEXT_PUBLIC_SITE_URL || '';
+  const urunLd = {
+    '@context': 'https://schema.org', '@type': 'Product', name: p.name, description: p.description,
+    image: (p.images || []).map((u) => (u.startsWith('http') ? u : `${SITE}${u}`)), brand: { '@type': 'Brand', name: '3D Dünyası' },
+    offers: { '@type': 'Offer', priceCurrency: 'TRY', price: Number(p.sale_unit === 'paket' ? p.pack_price ?? p.price * p.pack_size : p.price).toFixed(2),
+      availability: p.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock', url: `${SITE}/urun/${p.slug}` },
+    ...(ort && { aggregateRating: { '@type': 'AggregateRating', ratingValue: ort, reviewCount: reviews.length } }),
+  };
+
   return (
     <div className="kap py-8">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(urunLd) }} />
       <nav aria-label="Konum" className="soluk mb-6 text-sm">
         <Link href={bolum.yol} className="hover:underline">{bolum.ad}</Link>
         {p.categories && <> / <Link href={`${bolum.yol}?kategori=${p.categories.slug}`} className="hover:underline">{p.categories.name}</Link></>}
@@ -38,10 +48,10 @@ export default async function ProductPage({ params }) {
       <div className="grid gap-10 md:grid-cols-2">
         <Gallery images={p.images?.length ? p.images : ['/ornek/yazici.svg']} alt={p.name} />
         <div>
-          <h1 className="text-3xl font-bold leading-tight sm:text-4xl">{p.name}</h1>
+          <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">{p.name}</h1>
           {ort && <p className="soluk mt-2 text-sm">★ {ort} · {reviews.length} değerlendirme</p>}
           <div className="mt-4 flex items-baseline gap-3">
-            <span className="font-display text-3xl font-bold">{tl(p.sale_unit === 'paket' ? p.pack_price ?? p.price * p.pack_size : p.price)}</span>
+            <span className="font-display text-3xl font-semibold">{tl(p.sale_unit === 'paket' ? p.pack_price ?? p.price * p.pack_size : p.price)}</span>
             {p.sale_unit === 'paket' && <span className="soluk text-sm">{p.pack_size}'li paket</span>}
             {p.compare_price > p.price && <span className="soluk line-through">{tl(p.compare_price)}</span>}
           </div>

@@ -9,7 +9,7 @@ export default function CartPage() {
   if (!items.length)
     return (
       <div className="kap py-20 text-center">
-        <h1 className="text-3xl font-bold">Sepetiniz boş</h1>
+        <h1 className="text-3xl font-semibold">Sepetiniz boş</h1>
         <p className="soluk mt-2">Baskı ürünlerimize veya malzemelerimize göz atarak başlayabilirsiniz.</p>
         <div className="mt-6 flex justify-center gap-3">
           <Link href="/baski-urunleri" className="btn-ana">Baskı ürünleri</Link>
@@ -19,7 +19,7 @@ export default function CartPage() {
     );
   return (
     <div className="kap py-10">
-      <h1 className="text-3xl font-bold">Sepetim</h1>
+      <h1 className="text-3xl font-semibold">Sepetim</h1>
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_340px]">
         <ul className="divide-y divide-lacivert-100 dark:divide-lacivert-800">
           {items.map((i) => {

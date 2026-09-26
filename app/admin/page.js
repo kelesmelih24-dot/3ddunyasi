@@ -34,7 +34,7 @@ export default async function Dashboard() {
 
   return (
     <div className="space-y-8">
-      <h1 className="text-3xl font-bold">Genel bakış</h1>
+      <h1 className="text-3xl font-semibold">Genel bakış</h1>
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
         <Kart ad="Son 30 gün ciro" deger={tl(ciro)} />
         <Kart ad="Son 30 gün sipariş" deger={orders?.length || 0} href="/admin/siparisler" />

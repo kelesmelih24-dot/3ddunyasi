@@ -14,7 +14,7 @@ export default async function Success({ searchParams }) {
     <div className="kap max-w-2xl py-16">
       <div className="kutu p-8">
         <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300">Siparişiniz alındı</p>
-        <h1 className="mt-1 text-3xl font-bold">{order.order_no}</h1>
+        <h1 className="mt-1 text-3xl font-semibold">{order.order_no}</h1>
         <p className="soluk mt-2">Sipariş özetini {order.email} adresine gönderdik.</p>
         {order.payment_method === 'havale' && order.payment_status !== 'odendi' && (
           <div className="mt-6 rounded-lg bg-nozul-50 p-5 dark:bg-nozul-700/20">

@@ -10,7 +10,7 @@ export default async function Page() {
     <div className="kap grid gap-12 py-12 lg:grid-cols-[1fr_1.2fr]">
       <div>
         <p className="ust-etiket">Size özel üretim</p>
-        <h1 className="mt-2 text-4xl font-bold leading-tight sm:text-5xl">Özel sipariş talebi</h1>
+        <h1 className="mt-2 text-4xl font-semibold leading-tight sm:text-5xl">Özel sipariş talebi</h1>
         <p className="soluk mt-4 max-w-md leading-7">Hazır bir 3D modeliniz varsa STL dosyasını yükleyin; bir ürüne isim, tarih veya logo eklemek istiyorsanız yazıyı iletin. Talebinizi inceleyip genellikle 1 iş günü içinde fiyat teklifimizi gönderiyoruz.</p>
         <ol className="mt-8 space-y-4 text-sm">
           {['Talebinizi dosya veya açıklamayla gönderin', 'Malzeme, süre ve fiyat teklifimizi e-posta ile alın', 'Onayladığınızda baskıya başlayıp kargoya verelim'].map((t, i) => (

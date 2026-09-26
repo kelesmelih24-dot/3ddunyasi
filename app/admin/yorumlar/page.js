@@ -11,7 +11,7 @@ export default function Page() {
   const sil = async (r) => { if (confirm('Yorum silinsin mi?')) { await supabase.from('reviews').delete().eq('id', r.id); load(); } };
   return (
     <div>
-      <h1 className="mb-5 text-3xl font-bold">Yorumlar</h1>
+      <h1 className="mb-5 text-3xl font-semibold">Yorumlar</h1>
       {!list.length && <p className="kutu soluk p-6">Henüz yorum yok.</p>}
       <ul className="space-y-3">
         {list.map((r) => (

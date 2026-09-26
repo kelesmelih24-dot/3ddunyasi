@@ -11,7 +11,7 @@ export default async function Page() {
   const { data } = await supabase.from('custom_requests').select('*').eq('user_id', user.id).order('created_at', { ascending: false });
   return (
     <div className="kap py-10">
-      <h1 className="mb-6 text-3xl font-bold">Hesabım</h1>
+      <h1 className="mb-6 text-3xl font-semibold">Hesabım</h1>
       <AccountNav active="/hesabim/talepler" />
       {!data?.length ? (
         <div className="kutu p-10 text-center"><p className="font-semibold">Henüz özel sipariş talebiniz yok</p><Link href="/ozel-siparis" className="btn-ana mt-4">Talep oluştur</Link></div>
