@@ -5,6 +5,7 @@ import CartButton from './CartButton';
 import UserMenu from './UserMenu';
 import HeaderShell from './HeaderShell';
 import MobileMenu from './MobileMenu';
+import SearchBox from './SearchBox';
 
 const NAV = [['/baski-urunleri', 'Baskı ürünleri'], ['/malzemeler', 'Malzemeler'], ['/ozel-siparis', 'Özel sipariş'], ['/siparis-takip', 'Sipariş takibi']];
 
@@ -22,10 +23,7 @@ export default function Header({ user, isAdmin, phone }) {
           ))}
         </nav>
         <div className="ml-auto flex items-center gap-1">
-          <form action="/baski-urunleri" className="relative mr-1 hidden md:block" role="search">
-            <svg className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-lacivert-400" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-            <input name="q" type="search" placeholder="Ürün ara" aria-label="Ürün ara" className="girdi w-52 rounded-full bg-lacivert-50 py-2 pl-10 transition-all focus:w-64 focus:bg-white dark:bg-lacivert-900" />
-          </form>
+          <SearchBox className="mr-1 hidden md:block" />
           <span className="hidden lg:inline-flex"><ThemeToggle /></span>
           <CartButton />
           <span className="hidden sm:inline-flex"><UserMenu user={user} isAdmin={isAdmin} /></span>

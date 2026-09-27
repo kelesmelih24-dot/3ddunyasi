@@ -1,29 +1,17 @@
 import { redirect } from 'next/navigation';
-import Link from 'next/link';
 import { getUserAndProfile } from '@/lib/supabase/server';
+import AdminNav from '@/components/admin/AdminNav';
 
 export const metadata = { title: 'Yönetim paneli', robots: { index: false } };
-
-const MENU = [
-  ['/admin', 'Genel bakış'], ['/admin/siparisler', 'Siparişler'], ['/admin/urunler', 'Ürünler ve stok'],
-  ['/admin/kategoriler', 'Kategoriler'], ['/admin/kuponlar', 'Kuponlar'], ['/admin/ozel-talepler', 'Özel talepler'],
-  ['/admin/musteriler', 'Müşteriler'], ['/admin/bulten', 'Bülten aboneleri'], ['/admin/galeri', 'Galeri'], ['/admin/yorumlar', 'Yorumlar'], ['/admin/ayarlar', 'Mağaza ayarları'],
-];
+const ROLLER = ['admin', 'siparis', 'urun'];
 
 export default async function AdminLayout({ children }) {
   const { user, profile } = await getUserAndProfile();
   if (!user) redirect('/giris?sonra=/admin');
-  if (profile?.role !== 'admin') redirect('/');
+  if (!ROLLER.includes(profile?.role)) redirect('/');
   return (
-    <div className="kap grid gap-8 py-8 lg:grid-cols-[210px_1fr]">
-      <aside>
-        <p className="mb-3 font-display text-lg font-bold">Yönetim</p>
-        <nav className="flex gap-1 overflow-x-auto text-sm lg:flex-col">
-          {MENU.map(([h, t]) => (
-            <Link key={h} href={h} className="whitespace-nowrap rounded-md px-3 py-2 hover:bg-lacivert-50 dark:hover:bg-lacivert-800">{t}</Link>
-          ))}
-        </nav>
-      </aside>
+    <div className="kap grid gap-6 py-6 lg:grid-cols-[220px_1fr] lg:gap-8 lg:py-8">
+      <AdminNav rol={profile.role} />
       <div className="min-w-0">{children}</div>
     </div>
   );

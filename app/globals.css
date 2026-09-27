@@ -95,3 +95,15 @@ html.js .reveal.gorundu { opacity: 1; transform: none; }
 .zipla:hover { transform: translateY(-4px) rotate(-1deg); }
 @keyframes salla { 0%,100% { transform: rotate(-6deg); } 50% { transform: rotate(-2deg) scale(1.04); } }
 .salla { animation: salla 2.6s ease-in-out infinite; }
+
+/* ---------- Blog yazısı ---------- */
+.blog-yazi { @apply text-[17px] leading-8 text-lacivert-600 dark:text-lacivert-100; }
+.blog-yazi h2 { @apply mb-3 mt-10 font-display text-2xl font-semibold text-lacivert-800 dark:text-white; }
+.blog-yazi h3 { @apply mb-2 mt-8 font-display text-xl font-semibold text-lacivert-800 dark:text-white; }
+.blog-yazi h4 { @apply mb-2 mt-6 font-semibold text-lacivert-800 dark:text-white; }
+.blog-yazi p { @apply mb-5; }
+.blog-yazi a { @apply font-semibold text-nozul-600 underline dark:text-nozul-300; }
+.blog-yazi ul { @apply mb-5 list-disc pl-6; } .blog-yazi ol { @apply mb-5 list-decimal pl-6; } .blog-yazi li { @apply mb-1.5; }
+.blog-yazi img { @apply my-6 w-full rounded-2xl; }
+.blog-yazi blockquote { @apply my-6 border-l-4 border-nozul-500 pl-5 italic; }
+.blog-yazi strong { @apply text-lacivert-800 dark:text-white; }

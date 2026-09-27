@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import ThemeToggle from './ThemeToggle';
+import SearchBox from './SearchBox';
 
 export default function MobileMenu({ links, user, isAdmin, phone }) {
   const [acik, setAcik] = useState(false);
@@ -34,9 +35,7 @@ export default function MobileMenu({ links, user, isAdmin, phone }) {
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M6 6l12 12M18 6 6 18" /></svg>
             </button>
           </div>
-          <form action="/baski-urunleri" className="px-5" role="search">
-            <input name="q" type="search" placeholder="Ürün ara" aria-label="Ürün ara" className="girdi rounded-full" />
-          </form>
+          <div className="px-5"><SearchBox mobil /></div>
           <ul className="mt-4 flex-1 overflow-y-auto px-3">
             {links.map(([h, t], i) => (
               <li key={h} className={`transition-all duration-500 ${acik ? 'translate-x-0 opacity-100' : 'translate-x-6 opacity-0'}`} style={{ transitionDelay: acik ? `${120 + i * 60}ms` : '0ms' }}>

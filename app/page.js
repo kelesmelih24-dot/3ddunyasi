@@ -19,8 +19,8 @@ const PANELLER = [
     cta: 'Malzemelere göz at', tema: 'bg-krem text-lacivert-800', golge: 'from-krem via-krem/80', rozet: 'Adet veya paket',
   },
   {
-    no: '03', href: null, img: '/panel/yazici.svg', video: '/video/yazici.mp4', baslik: 'Yazıcı ve filament',
-    metin: '3D yazıcı ve filament satışımız çok yakında başlıyor.', tema: 'bg-[#EFEDEA] text-lacivert-800', golge: 'from-[#EFEDEA] via-[#EFEDEA]/80',
+    no: '03', href: '/yazici-filament', yakinda: true, img: '/panel/yazici.svg', video: '/video/yazici.mp4', baslik: 'Yazıcı ve filament',
+    metin: '3D yazıcı ve filament satışımız çok yakında. Ürünleri şimdiden inceleyin.', cta: 'Ön izleme', tema: 'bg-[#EFEDEA] text-lacivert-800', golge: 'from-[#EFEDEA] via-[#EFEDEA]/80',
   },
 ];
 
@@ -30,20 +30,21 @@ function Ok() {
 
 function Panel({ p, i }) {
   const acik = !!p.href;
+  const yakinda = !!p.yakinda;
   const ic = (
     <>
-      <PanelMedia video={p.video} img={p.img} soluk={!acik} hover={acik} />
+      <PanelMedia video={p.video} img={p.img} soluk={yakinda} hover={acik} />
       <div className={`pointer-events-none absolute inset-x-0 bottom-0 h-[62%] bg-gradient-to-t ${p.golge} to-transparent`} />
       {p.rozet && (
         <span className={`salla absolute right-5 top-5 rounded-full px-3.5 py-1.5 font-display text-xs font-semibold shadow-lg ${i === 0 ? 'bg-white text-nozul-600' : 'bg-nozul-500 text-white'}`}>{p.rozet}</span>
       )}
-      {!acik && (
+      {yakinda && (
         <div className="absolute inset-x-0 top-[24%] grid place-items-center">
           <span className="rotate-[-6deg] rounded-2xl border-[3px] border-nozul-500 bg-white/80 px-6 py-2 font-display text-3xl font-semibold uppercase text-nozul-500 backdrop-blur-sm sm:text-4xl">Yakında</span>
         </div>
       )}
       <div className="relative mt-auto p-7 sm:p-8">
-        <p className={`font-display text-xs font-semibold tracking-etiket ${acik ? '' : 'opacity-50'}`}>{p.no}</p>
+        <p className={`font-display text-xs font-semibold tracking-etiket ${yakinda ? 'opacity-50' : ''}`}>{p.no}</p>
         <h2 className="mt-2 text-[1.75rem] font-semibold leading-[1.1] sm:text-[2rem]">{p.baslik}</h2>
         <p className={`mt-3 max-w-sm text-[15px] leading-6 ${i === 0 ? 'text-white/90' : 'soluk'}`}>{p.metin}</p>
         {acik && (

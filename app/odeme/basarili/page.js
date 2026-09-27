@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { getSettings } from '@/lib/settings';
 import { tl } from '@/lib/format';
+import PurchaseEvent from '@/components/PurchaseEvent';
 
 export const metadata = { title: 'Siparişiniz alındı' };
 
@@ -12,6 +13,7 @@ export default async function Success({ searchParams }) {
   if (!order) return <div className="kap py-20 text-center"><h1 className="text-2xl font-bold">Sipariş bulunamadı</h1><Link href="/hesabim" className="btn-ana mt-6">Siparişlerime git</Link></div>;
   return (
     <div className="kap max-w-2xl py-16">
+      <PurchaseEvent order={{ order_no: order.order_no, total: order.total }} />
       <div className="kutu p-8">
         <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300">Siparişiniz alındı</p>
         <h1 className="mt-1 text-3xl font-semibold">{order.order_no}</h1>

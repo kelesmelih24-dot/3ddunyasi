@@ -47,15 +47,15 @@ git push -u origin main
 
 1. [vercel.com](https://vercel.com) → **Add New → Project** → GitHub deponuzu seçin.
 2. **Environment Variables** bölümüne `.env.example` içindeki değişkenleri girin. İlk etapta şu dördü yeterli:
-   `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_SITE_URL=https://3ddunyasi.com.tr`
+   `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_SITE_URL=https://xn--3ddnyas-p2a59b.com.tr`
 3. **Deploy**.
-4. **Settings → Domains** → `3ddunyasi.com.tr` ve `www.3ddunyasi.com.tr` ekleyin. Vercel'in gösterdiği DNS kayıtlarını alan adını aldığınız firmanın panelinde girin.
+4. **Settings → Domains** → `xn--3ddnyas-p2a59b.com.tr` ve `www.xn--3ddnyas-p2a59b.com.tr` (3ddünyası.com.tr) ekleyin. Vercel'in gösterdiği DNS kayıtlarını alan adını aldığınız firmanın panelinde girin.
 
 ### 4. Supabase giriş ayarları
 
 **Authentication → URL Configuration**
-- Site URL: `https://3ddunyasi.com.tr`
-- Redirect URLs: `https://3ddunyasi.com.tr/**` ve yerel test için `http://localhost:3000/**`
+- Site URL: `https://xn--3ddnyas-p2a59b.com.tr` (3ddünyası.com.tr)
+- Redirect URLs: `https://xn--3ddnyas-p2a59b.com.tr/**` ve yerel test için `http://localhost:3000/**`
 
 **Google ile giriş**
 1. [Google Cloud Console](https://console.cloud.google.com) → yeni proje → **APIs & Services → OAuth consent screen** (External) doldurun.
@@ -77,7 +77,7 @@ Sayfayı yenileyince hesap menüsünde **Yönetim paneli** görünür. İlk iş 
 
 ### 6. E-posta gönderimi (Resend)
 
-1. [resend.com](https://resend.com) → hesap açın → **Domains** → `3ddunyasi.com.tr` ekleyip DNS kayıtlarını girin.
+1. [resend.com](https://resend.com) → hesap açın → **Domains** → `xn--3ddnyas-p2a59b.com.tr` ekleyip DNS kayıtlarını girin.
 2. API key oluşturun. Vercel'e `RESEND_API_KEY`, `EMAIL_FROM` ve `ADMIN_EMAIL` ekleyip yeniden deploy edin.
 
 Anahtar girilmezse site çalışır, sadece e-posta gönderilmez.
@@ -147,3 +147,53 @@ Dikey (9:16), sessiz, 5-8 saniyelik, döngüye uygun ve 4 MB altında videolar �
 
 ### Intro
 Nozul "3D Dünyası" yazısını el yazısıyla çizer, perde ikiye açılır. Site her açıldığında (veya sayfa yenilendiğinde) gösterilir, "Geç" ile atlanabilir. Site içinde sayfalar arası geçişte tekrar oynamaz. Yazıcı sesi, tarayıcı kuralları gereği ziyaretçi hoparlör düğmesine basınca çalar.
+
+---
+
+## Güncelleme 3 (Paket 1): Ürün sayfası, özel sipariş, bildirimler
+
+**Veritabanı:** Supabase → SQL Editor'da `supabase/guncelleme-3.sql` dosyasını bir kez çalıştırın.
+
+**Yeni özellikler**
+- Ürün sayfası: video (YouTube veya MP4), 3D model görüntüleyici (STL/GLB), teknik bilgi tablosu, fotoğraflı yorumlar, soru-cevap, benzer ürünler, son baktıklarınız, "stoğa gelince haber ver"
+- Kişiye özel ürünlerde canlı önizleme (isimlik, plaka, oval etiket). Ürün formunda "Canlı önizleme şekli" seçin.
+- Özel sipariş: STL/OBJ yükleyince 3D önizleme, malzeme/renk/kalite/doluluk/ölçek seçimi ve anında tahmini fiyat.
+  Fiyat formülü: Yönetim paneli → Mağaza ayarları → "Özel sipariş tahmini fiyat ayarları".
+- Teklif akışı: Admin teklif verince müşteriye e-posta gider; müşteri hesabından "Teklifi onayla" ile siparişe dönüştürür.
+- Anında arama (üst menü) ve /ara sonuç sayfası
+- Yönetim paneli → Ürün soruları
+- Telegram bildirimleri: yeni sipariş, özel talep, ürün sorusu, azalan stok
+
+### Telegram kurulumu
+1. Telegram'da @BotFather'a yazın → /newbot → bot adı verin → size bir **token** verir.
+2. Yeni botunuza Telegram'dan "merhaba" yazın.
+3. Tarayıcıda açın: https://api.telegram.org/bot<TOKEN>/getUpdates → "chat":{"id": ... } değerini kopyalayın.
+4. Vercel → Environment Variables: `TELEGRAM_BOT_TOKEN` ve `TELEGRAM_CHAT_ID` ekleyin (tür: Secret) → Redeploy.
+
+---
+
+## BÜYÜK GÜNCELLEME (Paket 1 + 2 + 3) — Yükleme sırası
+
+1. **Veritabanı:** Supabase → SQL Editor → `supabase/guncelleme-buyuk.sql` dosyasının tamamını yapıştırıp **Run**. (guncelleme-3/4/5'i ayrıca çalıştırmayın, hepsi bunun içinde.)
+2. **Kod:** Klasörün içindekileri GitHub Desktop depo klasörüne kopyalayın → Commit → Push.
+3. **Vercel ortam değişkenleri** (hepsi isteğe bağlı; eklenmeyen özellik sessizce kapalı kalır):
+   - `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` → Telegram bildirimleri
+   - `RESEND_API_KEY`, `EMAIL_FROM`, `ADMIN_EMAIL` → e-postalar
+   - `CRON_SECRET` → terk edilen sepet hatırlatması (rastgele uzun bir metin)
+   - `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_GADS_ID`, `NEXT_PUBLIC_GADS_PURCHASE_LABEL` → Google Analytics / Ads (tür: Config)
+   - `ANTHROPIC_API_KEY` → yapay zekâ asistanı (console.anthropic.com; kullanım başına ücretlidir)
+   Değişken ekledikten sonra **Redeploy**.
+
+### Paket 2
+Süreli indirim (sayaçlı), X al Y öde, set ürünler, ilk siparişe indirim, hediye çeki (/hediye-ceki), hediye paketi,
+puan sistemi, terk edilen sepet e-postası (her gün 09:00 UTC), kurumsal teklif formu (/kurumsal), kayıtlı adresler,
+tekrar sipariş, fatura yükleme/indirme, iade talebi, hesap silme, Ankara içi elden teslim ve gel-al, kargo takip linkleri.
+
+### Paket 3
+Çalışan rolleri (Müşteriler ve ekip sayfasından), mobil uyumlu yönetim paneli, Excel ile toplu ürün yükleme/indirme,
+Excel'e sipariş ve rapor aktarma, etiket + fiş yazdırma, maliyet/kâr raporu, baskı kuyruğu, düşük stok uyarısı,
+blog (/blog), Google Analytics + Ads (çerez onaylı), telefona uygulama gibi yükleme (PWA),
+yazıcı-filament vitrini (/yazici-filament), yapay zekâ asistanı.
+
+### Şirket kurulunca eklenecekler
+Trendyol / Hepsiburada entegrasyonu, SMS bildirimleri (Netgsm + İYS), kartla ödeme (iyzico anahtarları), e-fatura.

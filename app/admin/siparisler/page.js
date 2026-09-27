@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
-import { tl, tarih, DURUMLAR } from '@/lib/format';
+import { tl, tarih, DURUMLAR, TESLIMAT } from '@/lib/format';
+import ExcelExport from '@/components/admin/ExcelExport';
 
 export default async function Page({ searchParams }) {
   const supabase = createClient();
@@ -20,7 +21,16 @@ export default async function Page({ searchParams }) {
         ))}
         <form className="ml-auto"><input name="q" defaultValue={searchParams?.q} placeholder="Sipariş no veya e-posta" className="girdi py-1.5" /></form>
       </div>
-      <div className="kutu overflow-x-auto">
+      <div className="space-y-2 md:hidden">
+        {(orders || []).map((o) => (
+          <Link key={o.id} href={`/admin/siparisler/${o.id}`} className="kutu block p-4 text-sm">
+            <div className="flex items-center justify-between"><b>{o.order_no}</b><b>{tl(o.total)}</b></div>
+            <p className="soluk">{o.shipping_address?.full_name} · {tarih(o.created_at)}</p>
+            <div className="mt-2 flex gap-2"><span className={`rounded px-2 py-0.5 text-xs font-semibold ${DURUMLAR[o.status].renk}`}>{DURUMLAR[o.status].ad}</span>{o.gift_wrap && <span className="text-xs">🎁</span>}{o.delivery_method !== 'kargo' && <span className="text-xs">{TESLIMAT[o.delivery_method]}</span>}</div>
+          </Link>
+        ))}
+      </div>
+      <div className="kutu hidden overflow-x-auto md:block">
         <table className="w-full text-left text-sm">
           <thead className="soluk border-b border-lacivert-100 dark:border-lacivert-800"><tr><th className="p-3">Sipariş</th><th className="p-3">Müşteri</th><th className="p-3">Tarih</th><th className="p-3">Ödeme</th><th className="p-3">Durum</th><th className="p-3 text-right">Tutar</th></tr></thead>
           <tbody className="divide-y divide-lacivert-100 dark:divide-lacivert-800">

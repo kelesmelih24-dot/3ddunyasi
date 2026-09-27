@@ -1,5 +1,5 @@
 import Link from 'next/link';
-const L = [['/hesabim', 'Siparişlerim'], ['/hesabim/favoriler', 'Favorilerim'], ['/hesabim/talepler', 'Özel taleplerim'], ['/hesabim/profil', 'Profil bilgilerim']];
+const L = [['/hesabim', 'Siparişlerim'], ['/hesabim/puanlar', 'Puanlarım'], ['/hesabim/favoriler', 'Favorilerim'], ['/hesabim/talepler', 'Özel taleplerim'], ['/hesabim/adresler', 'Adreslerim'], ['/hesabim/profil', 'Profil bilgilerim']];
 export default function AccountNav({ active }) {
   return (
     <nav className="mb-8 flex gap-1 overflow-x-auto border-b border-lacivert-100 text-sm dark:border-lacivert-800">

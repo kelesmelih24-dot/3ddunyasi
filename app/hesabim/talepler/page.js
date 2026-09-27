@@ -18,11 +18,18 @@ export default async function Page() {
       ) : (
         <ul className="space-y-3">
           {data.map((t) => (
-            <li key={t.id} className="kutu p-4 text-sm">
-              <div className="flex flex-wrap justify-between gap-2"><b>{t.kind === 'stl' ? 'STL baskı talebi' : 'Kişiye özel yazı'}</b><span className="soluk">{tarih(t.created_at)}</span></div>
+            <li key={t.id} className="kutu p-5 text-sm">
+              <div className="flex flex-wrap justify-between gap-2"><b>{t.kind === 'stl' ? 'Model baskı talebi' : 'Kişiye özel yazı'}</b><span className="soluk">{tarih(t.created_at)}</span></div>
               <p className="mt-2">{t.description}</p>
-              <p className="mt-2">Durum: <b>{TALEP_DURUM[t.status]}</b>{t.quote_price && <> · Teklif: <b>{tl(t.quote_price)}</b></>}</p>
-              {t.admin_note && <p className="soluk mt-1">Notumuz: {t.admin_note}</p>}
+              <p className="soluk mt-1">{[t.material, t.color, t.infill && `%${t.infill} doluluk`, t.dims, `${t.quantity} adet`].filter(Boolean).join(' · ')}</p>
+              <div className="mt-3 flex flex-wrap items-center gap-3">
+                <span className="rounded-full bg-lacivert-50 px-3 py-1 text-xs font-bold dark:bg-lacivert-800">{TALEP_DURUM[t.status]}</span>
+                {t.estimate_price && !t.quote_price && <span className="soluk">Tahmini: {tl(t.estimate_price)}</span>}
+                {t.quote_price && <span className="font-bold">Teklif: {tl(t.quote_price)}</span>}
+                {t.status === 'teklif_verildi' && !t.order_id && <Link href={`/hesabim/talepler/${t.id}`} className="btn-ana ml-auto py-2">Teklifi onayla ve sipariş ver</Link>}
+                {t.order_id && <Link href={`/hesabim/siparis/${t.order_id}`} className="btn-cizgi ml-auto py-2">Siparişi görüntüle</Link>}
+              </div>
+              {t.admin_note && <p className="soluk mt-2">Notumuz: {t.admin_note}</p>}
             </li>
           ))}
         </ul>

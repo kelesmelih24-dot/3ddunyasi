@@ -32,6 +32,7 @@ export default function Page() {
           <p>Durum: <span className={`rounded px-2 py-0.5 text-xs font-semibold ${DURUMLAR[res.status].renk}`}>{DURUMLAR[res.status].ad}</span></p>
           <p>Tutar: <b>{tl(res.total)}</b></p>
           {res.tracking_no && <p>Kargo: <b>{res.cargo_company}</b> · Takip no: <b className="font-mono">{res.tracking_no}</b></p>}
+          {res.takip && <a href={res.takip} target="_blank" rel="noreferrer" className="btn-ana mt-2">Kargom nerede?</a>}
         </div>
       )}
     </div>

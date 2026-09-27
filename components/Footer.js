@@ -3,8 +3,8 @@ import Logo from './Logo';
 import NewsletterForm from './NewsletterForm';
 
 const GRUPLAR = [
-  ['Alışveriş', [['/baski-urunleri', 'Baskı ürünleri'], ['/malzemeler', 'Malzemeler'], ['/ozel-siparis', 'Özel sipariş'], ['/siparis-takip', 'Sipariş takibi']]],
-  ['Kurumsal', [['/hakkimizda', 'Hakkımızda'], ['/iletisim', 'İletişim'], ['/iade-ve-degisim', 'İade ve değişim']]],
+  ['Alışveriş', [['/baski-urunleri', 'Baskı ürünleri'], ['/malzemeler', 'Malzemeler'], ['/ozel-siparis', 'Özel sipariş'], ['/hediye-ceki', 'Hediye çeki'], ['/siparis-takip', 'Sipariş takibi']]],
+  ['Kurumsal', [['/blog', 'Blog'], ['/kurumsal', 'Kurumsal ve toplu sipariş'], ['/hakkimizda', 'Hakkımızda'], ['/iletisim', 'İletişim'], ['/iade-ve-degisim', 'İade ve değişim']]],
   ['Yasal', [['/kvkk', 'KVKK aydınlatma metni'], ['/mesafeli-satis-sozlesmesi', 'Mesafeli satış sözleşmesi'], ['/cerez-politikasi', 'Çerez politikası']]],
 ];
 

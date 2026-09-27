@@ -5,5 +5,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.svg|logo.svg|apple-icon.png|og.png|imlec|ornek|panel|video|sitemap.xml|robots.txt|api/iyzico).*)'],
+  matcher: ['/((?!_next/static|_next/image|favicon.svg|logo.svg|apple-icon.png|og.png|icon-|sw.js|cevrimdisi.html|manifest.webmanifest|imlec|ornek|panel|video|sitemap.xml|robots.txt|api/iyzico).*)'],
 };

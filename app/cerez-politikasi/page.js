@@ -8,8 +8,9 @@ export default function Page() {
       <ul>
         <li><b>Zorunlu çerezler:</b> Oturumunuzun açık kalması ve güvenli giriş için kullanılır. Bu çerezler olmadan üyelik ve sipariş işlemleri çalışmaz.</li>
         <li><b>Tercih kayıtları:</b> Sepetinizdeki ürünler, açık/koyu tema seçiminiz ve çerez tercihiniz tarayıcınızın yerel depolama alanında saklanır.</li>
+        <li><b>Analiz ve reklam çerezleri (onayınıza bağlı):</b> Google Analytics ile ziyaret istatistiklerini, Google Ads ile reklamlarımızın etkinliğini ölçeriz. Bu çerezler yalnızca çerez bildiriminde "Tümünü kabul et" seçeneğini seçerseniz etkinleşir; "Sadece zorunlu" derseniz kullanılmaz.</li>
       </ul>
-      <p>Sitemizde reklam veya üçüncü taraf takip çerezi kullanılmamaktadır. İleride analiz amaçlı çerez eklenirse bu sayfa güncellenecek ve onayınız alınacaktır.</p>
+      <p>Tercihinizi değiştirmek için tarayıcınızdan sitemize ait çerezleri ve site verilerini silmeniz yeterlidir; bildirim yeniden gösterilir.</p>
       <h2>Çerezleri yönetme</h2>
       <p>Tarayıcınızın ayarlarından çerezleri silebilir veya engelleyebilirsiniz. Zorunlu çerezleri engellemeniz durumunda giriş yapamayabilirsiniz.</p>
     </LegalPage>

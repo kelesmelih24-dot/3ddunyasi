@@ -4,6 +4,9 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import CookieBanner from '@/components/CookieBanner';
 import Intro from '@/components/Intro';
+import Analytics from '@/components/Analytics';
+import PwaRegister from '@/components/PwaRegister';
+import ChatWidget from '@/components/ChatWidget';
 import { CartProvider } from '@/components/CartProvider';
 import { getUserAndProfile } from '@/lib/supabase/server';
 import { getSettings } from '@/lib/settings';
@@ -17,6 +20,7 @@ export const metadata = {
   title: { default: '3D Dünyası | 3D baskı ürünleri ve malzemeleri', template: '%s | 3D Dünyası' },
   description: 'Atölyemizde bastığımız figür, dekorasyon ve kişiye özel ürünler; 3D baskı projeleriniz için anahtarlık halkası, mıknatıs, insert ve daha fazlası.',
   icons: { icon: '/favicon.svg', apple: '/apple-icon.png' },
+  appleWebApp: { capable: true, title: '3D Dünyası', statusBarStyle: 'default' },
   openGraph: { siteName: '3D Dünyası', locale: 'tr_TR', type: 'website', images: [{ url: '/og.png', width: 1200, height: 630 }] },
   twitter: { card: 'summary_large_image', images: ['/og.png'] },
 };
@@ -58,8 +62,10 @@ export default async function RootLayout({ children }) {
       </head>
       <body className="flex min-h-screen flex-col">
         <a href="#icerik" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[200] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:shadow">İçeriğe geç</a>
+        <Analytics />
+        <PwaRegister />
         <Intro />
-        <CartProvider>
+        <CartProvider userId={user?.id}>
           <div className="overflow-hidden bg-lacivert-800 text-xs font-semibold text-white" aria-label="Duyurular">
             <div className="duyuru-kay flex w-max py-2.5">
               {[0, 1].map((k) => (
@@ -71,10 +77,11 @@ export default async function RootLayout({ children }) {
               ))}
             </div>
           </div>
-          <Header user={user} isAdmin={profile?.role === "admin"} phone={settings.contact_phone} />
+          <Header user={user} isAdmin={["admin", "siparis", "urun"].includes(profile?.role)} phone={settings.contact_phone} />
           <main id="icerik" className="flex-1">{children}</main>
           <Footer settings={settings} />
           <WhatsAppButton number={settings.whatsapp} />
+          {process.env.ANTHROPIC_API_KEY && <ChatWidget />}
           <CookieBanner />
         </CartProvider>
       </body>

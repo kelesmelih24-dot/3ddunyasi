@@ -26,12 +26,12 @@ export default function CartPage() {
             const k = key(i);
             return (
               <li key={k} className="flex gap-4 py-5">
-                <Link href={`/urun/${i.slug}`} className="h-24 w-24 shrink-0 overflow-hidden rounded-md bg-lacivert-50 dark:bg-lacivert-900">
-                  <img src={i.image || '/ornek/yazici.svg'} alt="" className="h-full w-full object-cover" />
+                <Link href={i.kind === 'hediye_ceki' ? '/hediye-ceki' : `/urun/${i.slug}`} className="grid h-24 w-24 shrink-0 place-items-center overflow-hidden rounded-2xl bg-krem dark:bg-lacivert-900">
+                  {i.kind === 'hediye_ceki' ? <span className="text-4xl" aria-hidden="true">🎁</span> : <img src={i.image || '/ornek/yazici.svg'} alt="" className="h-full w-full object-cover" />}
                 </Link>
                 <div className="flex-1">
-                  <Link href={`/urun/${i.slug}`} className="font-semibold hover:underline">{i.name}</Link>
-                  <p className="soluk text-sm">{i.unit === 'paket' ? `${i.pack_size}'li paket` : 'Adet'} · {tl(i.price)}</p>
+                  <Link href={i.kind === 'hediye_ceki' ? '/hediye-ceki' : `/urun/${i.slug}`} className="font-semibold hover:underline">{i.name}</Link>
+                  <p className="soluk text-sm">{i.kind === 'hediye_ceki' ? `Alıcı: ${i.recipient_name || i.recipient_email || 'Size'}` : i.unit === 'paket' ? `${i.pack_size}'li paket` : 'Adet'} · {tl(i.price)}</p>
                   {i.personalization && <p className="text-sm">Yazı: <b>{i.personalization}</b></p>}
                   <div className="mt-2 flex items-center gap-3">
                     <div className="flex items-center rounded-md border border-lacivert-200 text-sm dark:border-lacivert-600">

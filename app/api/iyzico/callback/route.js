@@ -3,6 +3,8 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { getIyzipay, promisify } from '@/lib/iyzico';
 import { getSettings } from '@/lib/settings';
 import { sendEmail, siparisOnayMaili, adminYeniSiparisMaili } from '@/lib/email';
+import { telegram } from '@/lib/telegram';
+import { tl } from '@/lib/format';
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
@@ -30,6 +32,7 @@ export async function POST(req) {
     await Promise.all([
       sendEmail({ to: order.email, subject: `Siparişiniz alındı: ${order.order_no}`, html: siparisOnayMaili(updated, items, settings) }),
       process.env.ADMIN_EMAIL && sendEmail({ to: process.env.ADMIN_EMAIL, subject: `Yeni sipariş: ${order.order_no}`, html: adminYeniSiparisMaili(updated, items) }),
+      telegram(`💳 <b>Kartla ödenen sipariş</b> ${updated.order_no}\nToplam: <b>${tl(updated.total)}</b>`),
     ]);
     return NextResponse.redirect(`${SITE}/odeme/basarili?no=${order.order_no}`, 303);
   } catch (e) {

@@ -1,21 +1,14 @@
 import CheckoutForm from '@/components/CheckoutForm';
 import { getUserAndProfile } from '@/lib/supabase/server';
-import { getSettings } from '@/lib/settings';
 import { iyzicoAktif } from '@/lib/iyzico';
 
 export const metadata = { title: 'Ödeme' };
 
 export default async function CheckoutPage({ searchParams }) {
-  const { user, profile } = await getUserAndProfile();
-  const settings = await getSettings();
-  return (
-    <CheckoutForm
-      email={user?.email}
-      profile={profile}
-      shippingFee={Number(settings.shipping_fee)}
-      freeLimit={Number(settings.free_shipping_limit)}
-      iyzico={iyzicoAktif()}
-      initialError={searchParams?.hata}
-    />
-  );
+  const { supabase, user, profile } = await getUserAndProfile();
+  const [{ data: adresler }, { data: info }] = await Promise.all([
+    supabase.from('addresses').select('*').eq('user_id', user.id).order('is_default', { ascending: false }).order('created_at'),
+    supabase.rpc('checkout_info'),
+  ]);
+  return <CheckoutForm email={user?.email} profile={profile} adresler={adresler || []} info={info || {}} iyzico={iyzicoAktif()} initialError={searchParams?.hata} />;
 }

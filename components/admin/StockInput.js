@@ -9,6 +9,7 @@ export default function StockInput({ id, initial }) {
     if (Number(v) === initial && state !== 'saved') return;
     const { error } = await createClient().from('products').update({ stock: Math.max(0, Number(v) || 0) }).eq('id', id);
     setState(error ? 'err' : 'saved');
+    if (!error && initial <= 0 && Number(v) > 0) fetch('/api/admin/stok-bildir', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ productId: id }) });
   }
   return (
     <div className="flex items-center gap-2">

@@ -4,6 +4,20 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { getSettings } from '@/lib/settings';
 import { sendEmail, siparisOnayMaili, adminYeniSiparisMaili } from '@/lib/email';
 import { iyzicoAktif, getIyzipay, promisify } from '@/lib/iyzico';
+import { telegram, esc } from '@/lib/telegram';
+import { tl } from '@/lib/format';
+
+// Yöneticiye yeni sipariş ve azalan stok bildirimi
+async function siparisBildir(order, items) {
+  const liste = items.map((i) => `• ${i.quantity} × ${esc(i.name)}${i.personalization ? ` (<i>${esc(i.personalization)}</i>)` : ''}`).join('\n');
+  await telegram(`🛒 <b>Yeni sipariş</b> ${order.order_no}\n${esc(order.shipping_address?.full_name)} · ${order.payment_method === 'havale' ? 'Havale bekleniyor' : 'Kart'}\n${liste}\nToplam: <b>${tl(order.total)}</b>\n\n${process.env.NEXT_PUBLIC_SITE_URL || ''}/admin/siparisler/${order.id}`);
+  const ids = items.map((i) => i.product_id).filter(Boolean);
+  if (!ids.length) return;
+  const admin = createAdminClient();
+  const { data: ayar } = await admin.from('settings').select('low_stock_threshold').eq('id', 1).single();
+  const { data: az } = await admin.from('products').select('name, stock').in('id', ids).lte('stock', ayar?.low_stock_threshold ?? 3);
+  if (az?.length) await telegram(`⚠️ <b>Stok azaldı</b>\n${az.map((p) => `• ${esc(p.name)}: ${p.stock} adet`).join('\n')}`);
+}
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
@@ -19,16 +33,19 @@ export async function POST(req) {
   const { data: order, error } = await supabase.rpc('place_order', {
     p_items: body.items, p_address: body.address, p_payment: body.payment,
     p_coupon: body.coupon || null, p_note: body.note || null,
+    p_delivery: body.delivery || 'kargo', p_gift_wrap: !!body.gift_wrap, p_gift_note: body.gift_note || null,
+    p_use_points: !!body.use_points, p_gift_code: body.gift_code || null,
   });
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
 
   const { data: items } = await supabase.from('order_items').select('*').eq('order_id', order.id);
 
-  if (order.payment_method === 'havale') {
+  if (order.payment_method === 'havale' || Number(order.total) === 0) {
     const settings = await getSettings();
     await Promise.all([
       sendEmail({ to: order.email, subject: `Siparişiniz alındı: ${order.order_no}`, html: siparisOnayMaili(order, items, settings) }),
       process.env.ADMIN_EMAIL && sendEmail({ to: process.env.ADMIN_EMAIL, subject: `Yeni sipariş: ${order.order_no}`, html: adminYeniSiparisMaili(order, items) }),
+      siparisBildir(order, items),
     ]);
     return NextResponse.json({ order_no: order.order_no });
   }
