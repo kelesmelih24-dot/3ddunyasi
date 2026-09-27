@@ -9,10 +9,10 @@ async function katalog() {
   if (Date.now() - katalogOnbellek.zaman < 5 * 60e3) return katalogOnbellek.metin;
   const db = createAdminClient();
   const [{ data: urunler }, { data: s }] = await Promise.all([
-    db.from('products').select('name, slug, section, price, compare_price, sale_ends_at, stock, sale_unit, pack_size, pack_price, allow_personalization, description, categories(name)').eq('is_active', true).limit(200),
+    db.from('products').select('name, slug, section, price, compare_price, sale_ends_at, stock, sale_unit, pack_size, pack_price, allow_personalization, is_for_sale, description, categories(name)').eq('is_active', true).limit(200),
     db.from('settings').select('*').eq('id', 1).single(),
   ]);
-  const satir = (p) => `- ${p.name} | /urun/${p.slug} | ${p.section === 'yazici' ? 'YAKINDA (henüz satışta değil)' : `${p.price} TL${p.sale_unit !== 'adet' ? `, ${p.pack_size}'li paket ${p.pack_price} TL` : ''}`} | ${p.section === 'yazici' ? '' : p.stock > 0 ? `stok: ${p.stock}` : 'TÜKENDİ'}${p.allow_personalization ? ' | isim/yazı eklenebilir' : ''} | ${p.categories?.name || ''} | ${(p.description || '').slice(0, 140)}`;
+  const satir = (p) => `- ${p.name} | /urun/${p.slug} | ${p.section === 'yazici' ? 'YAKINDA (henüz satışta değil)' : `${p.price} TL${p.sale_unit !== 'adet' ? `, ${p.pack_size}'li paket ${p.pack_price} TL` : ''}`} | ${p.section === 'yazici' ? '' : p.is_for_sale === false ? 'SATIŞA KAPALI (satın alınamaz)' : p.stock > 0 ? `stok: ${p.stock}` : 'STOKTA YOK'}${p.allow_personalization ? ' | isim/yazı eklenebilir' : ''} | ${p.categories?.name || ''} | ${(p.description || '').slice(0, 140)}`;
   const metin = `MAĞAZA BİLGİLERİ
 - Kargo: ${s.shipping_fee} TL, ${s.free_shipping_limit} TL ve üzeri ücretsiz. Ankara içi elden teslim ${s.local_delivery_fee} TL, atölyeden gel-al ücretsiz.
 - Ödeme: Havale/EFT (kart ile ödeme yakında). İlk siparişe %${s.first_order_pct} indirim. Teslim edilen siparişlerde %${s.loyalty_pct} puan (1 puan = 1 TL).

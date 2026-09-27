@@ -19,6 +19,12 @@ export default function AddToCart({ product, email }) {
   const maxQty = Math.floor(product.stock / consume);
   const price = birimFiyat(product, unit);
 
+  if (product.is_for_sale === false) return (
+    <div className="flex items-center gap-4 rounded-2xl border-2 border-red-200 bg-red-50 p-5 dark:border-red-900 dark:bg-red-950/30">
+      <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-red-700 text-2xl font-bold text-white" aria-hidden="true">×</span>
+      <div><p className="font-semibold text-red-800 dark:text-red-200">Bu ürün şu an satışa kapalı</p><p className="soluk mt-0.5 text-sm">Ürünü inceleyebilirsiniz ancak şimdilik satın alınamaz.</p></div>
+    </div>
+  );
   if (product.stock <= 0) return <StockAlert productId={product.id} email={email} />;
 
   function ekle() {

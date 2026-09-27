@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { tl, BOLUMLER } from '@/lib/format';
 import StockInput from '@/components/admin/StockInput';
+import ProductRowActions from '@/components/admin/ProductRowActions';
 
 export default async function Page({ searchParams }) {
   const supabase = createClient();
@@ -12,7 +13,10 @@ export default async function Page({ searchParams }) {
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-3xl font-semibold">Ürünler ve stok</h1>
+        <div>
+          <h1 className="text-3xl font-semibold">Ürünler ve stok</h1>
+          <p className="soluk mt-1 text-sm">Stok her siparişte otomatik düşer, iptal edilen siparişte geri eklenir. Stok 0 olunca ürün "Stokta yok" görünür.</p>
+        </div>
         <Link href="/admin/urunler/yeni" className="btn-ana">Yeni ürün ekle</Link>
       </div>
       <form className="my-5 flex flex-wrap gap-2">
@@ -25,7 +29,7 @@ export default async function Page({ searchParams }) {
       </form>
       <div className="kutu overflow-x-auto">
         <table className="w-full text-left text-sm">
-          <thead className="soluk border-b border-lacivert-100 dark:border-lacivert-800"><tr><th className="p-3">Ürün</th><th className="p-3">Bölüm</th><th className="p-3">Fiyat</th><th className="p-3">Stok</th><th className="p-3">Durum</th></tr></thead>
+          <thead className="soluk border-b border-lacivert-100 dark:border-lacivert-800"><tr><th className="p-3">Ürün</th><th className="p-3">Bölüm</th><th className="p-3">Fiyat</th><th className="p-3">Stok</th><th className="p-3">Görünürlük</th><th className="p-3">Satış</th></tr></thead>
           <tbody className="divide-y divide-lacivert-100 dark:divide-lacivert-800">
             {(products || []).map((p) => (
               <tr key={p.id}>
@@ -37,6 +41,7 @@ export default async function Page({ searchParams }) {
                 <td className="p-3 whitespace-nowrap">{tl(p.price)}{p.sale_unit !== 'adet' && <span className="soluk block text-xs">{p.pack_size}'li: {tl(p.pack_price)}</span>}</td>
                 <td className="p-3"><StockInput id={p.id} initial={p.stock} /></td>
                 <td className="p-3">{p.is_active ? <span className="text-emerald-600">Yayında</span> : <span className="soluk">Gizli</span>}</td>
+                <td className="p-3"><ProductRowActions id={p.id} name={p.name} isForSale={p.is_for_sale} /></td>
               </tr>
             ))}
           </tbody>

@@ -71,11 +71,12 @@ html.js .reveal.gorundu { opacity: 1; transform: none; }
   html.js .reveal { opacity: 1; transform: none; }
 }
 
-/* ---------- Nozul imleci (sadece fareli cihazlar) ---------- */
+/* ---------- İmleç: markalı ok, tıklanabilir yerlerde standart el (sadece fareli cihazlar) ---------- */
 @media (hover: hover) and (pointer: fine) {
-  html { cursor: url('/imlec.svg') 6 27, auto; }
-  a, button, [role="button"], label, select, summary, input[type="checkbox"], input[type="radio"] { cursor: url('/imlec-el.svg') 6 27, pointer; }
+  html { cursor: url('/imlec.svg') 3 3, auto; }
+  a, button, [role="button"], label, select, summary, input[type="checkbox"], input[type="radio"], input[type="range"], input[type="color"] { cursor: pointer; }
   input[type="text"], input[type="email"], input[type="search"], input[type="number"], input[type="password"], input[type="tel"], input:not([type]), textarea { cursor: text; }
+  button:disabled { cursor: not-allowed; }
 }
 
 /* ---------- Duyuru şeridi ---------- */

@@ -51,7 +51,7 @@ export default function SearchBox({ className = '', mobil = false }) {
               className={`flex w-full items-center gap-3 rounded-xl px-2 py-2 text-left ${secili === i ? 'bg-nozul-50 dark:bg-nozul-700/20' : ''}`}>
               <img src={p.images?.[0] || '/ornek/yazici.svg'} alt="" className="h-11 w-11 rounded-lg bg-krem object-cover" />
               <span className="min-w-0 flex-1"><span className="block truncate text-sm font-semibold">{p.name}</span>
-                <span className="soluk text-xs">{p.section === 'malzeme' ? 'Malzeme' : 'Baskı ürünü'}{p.stock <= 0 ? ' · Tükendi' : ''}</span></span>
+                <span className="soluk text-xs">{p.section === 'malzeme' ? 'Malzeme' : 'Baskı ürünü'}{p.is_for_sale === false ? ' · Satışa kapalı' : p.stock <= 0 ? ' · Stokta yok' : ''}</span></span>
               <span className="text-sm font-bold">{tl(p.sale_unit === 'paket' ? p.pack_price ?? p.price * p.pack_size : p.price)}</span>
             </button>
           ))}

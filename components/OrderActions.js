@@ -20,7 +20,7 @@ export default function OrderActions({ order, items, iadeVar, iadeUygun }) {
     let eklenen = 0;
     for (const i of items) {
       const p = urunler?.find((u) => u.id === i.product_id);
-      if (!p || p.stock <= 0) continue;
+      if (!p || p.stock <= 0 || p.is_for_sale === false) continue;
       add({ product_id: p.id, slug: p.slug, name: p.name, image: p.images?.[0], unit: i.unit, pack_size: p.pack_size, price: birimFiyat(p, i.unit), quantity: i.quantity, personalization: i.personalization });
       eklenen++;
     }

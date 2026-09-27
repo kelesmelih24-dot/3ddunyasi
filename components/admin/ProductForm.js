@@ -6,7 +6,7 @@ import { createClient } from '@/lib/supabase/client';
 import { slugify, BOLUMLER } from '@/lib/format';
 
 const BOS = { section: 'baski', category_id: '', name: '', slug: '', description: '', price: '', compare_price: '', stock: 0, images: [],
-  sale_unit: 'adet', pack_size: 1, pack_price: '', allow_personalization: false, is_active: true, is_featured: false, video_url: '', model_url: '', specs: [], preview_type: '', sale_ends_at: '', bundle_items: [], print_grams: '', print_hours: '', extra_cost: 0, cost_price: '', brand: '', color_hex: '', group_key: '', variant_label: '' };
+  sale_unit: 'adet', pack_size: 1, pack_price: '', allow_personalization: false, is_active: true, is_for_sale: true, is_featured: false, video_url: '', model_url: '', specs: [], preview_type: '', sale_ends_at: '', bundle_items: [], print_grams: '', print_hours: '', extra_cost: 0, cost_price: '', brand: '', color_hex: '', group_key: '', variant_label: '' };
 
 export default function ProductForm({ product, categories }) {
   const router = useRouter();
@@ -67,7 +67,7 @@ export default function ProductForm({ product, categories }) {
       description: f.description, price: Number(f.price), compare_price: f.compare_price === '' ? null : Number(f.compare_price),
       stock: Math.max(0, Number(f.stock) || 0), images: f.images, sale_unit: f.sale_unit, pack_size: Number(f.pack_size) || 1,
       pack_price: f.pack_price === '' ? null : Number(f.pack_price), allow_personalization: f.allow_personalization,
-      is_active: f.is_active, is_featured: f.is_featured,
+      is_active: f.is_active, is_for_sale: f.is_for_sale !== false, is_featured: f.is_featured,
       video_url: f.video_url.trim() || null, model_url: f.model_url.trim() || null,
       specs: f.specs.filter((x) => x.ad?.trim() && x.deger?.trim()),
       sale_ends_at: f.sale_ends_at ? new Date(f.sale_ends_at).toISOString() : null,
@@ -227,7 +227,8 @@ export default function ProductForm({ product, categories }) {
           </div>
         )}
         <label className="flex items-center gap-2"><input type="checkbox" checked={f.is_featured} onChange={set('is_featured')} className="accent-nozul-500" /> Ana sayfada öne çıkar</label>
-        <label className="flex items-center gap-2"><input type="checkbox" checked={f.is_active} onChange={set('is_active')} className="accent-nozul-500" /> Sitede yayında</label>
+        <label className="flex items-center gap-2"><input type="checkbox" checked={f.is_active} onChange={set('is_active')} className="accent-nozul-500" /> Sitede yayında <span className="soluk">(kapalıysa ürün sitede hiç görünmez)</span></label>
+        <label className="flex items-center gap-2"><input type="checkbox" checked={f.is_for_sale !== false} onChange={set('is_for_sale')} className="accent-nozul-500" /> Satışta <span className="soluk">(kapalıysa ürün görünür, incelenebilir ama satın alınamaz)</span></label>
       </section>
 
       {err && <p className="hata">{err}</p>}
