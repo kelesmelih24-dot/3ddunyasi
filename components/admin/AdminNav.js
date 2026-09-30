@@ -5,10 +5,11 @@ import { useState } from 'react';
 
 // r: hangi roller görebilir (admin her şeyi görür)
 export const MENU = [
-  ['Satış', [['/admin', 'Genel bakış', 'siparis'], ['/admin/siparisler', 'Siparişler', 'siparis'], ['/admin/baski-kuyrugu', 'Baskı kuyruğu', 'siparis'], ['/admin/ozel-talepler', 'Özel talepler', 'siparis'], ['/admin/iadeler', 'İade talepleri', 'siparis'], ['/admin/sorular', 'Ürün soruları', 'siparis']]],
+  ['Satış', [['/admin/bugun', 'Bugün', 'siparis'], ['/admin', 'Genel bakış', 'siparis'], ['/admin/siparisler', 'Siparişler', 'siparis'], ['/admin/baski-kuyrugu', 'Baskı kuyruğu', 'siparis'], ['/admin/ozel-talepler', 'Özel talepler', 'siparis'], ['/admin/iadeler', 'İade talepleri', 'siparis'], ['/admin/sorular', 'Ürün soruları', 'siparis']]],
+  ['Atölye', [['/admin/filamentler', 'Filament envanteri', 'siparis'], ['/admin/yazicilar', 'Yazıcılar ve bakım', 'siparis'], ['/admin/tedarikciler', 'Tedarikçiler', 'siparis']]],
   ['Katalog', [['/admin/urunler', 'Ürünler ve stok', 'urun'], ['/admin/urunler/toplu', 'Excel ile toplu işlem', 'urun'], ['/admin/kategoriler', 'Kategoriler', 'urun'], ['/admin/galeri', 'Galeri', 'urun'], ['/admin/blog', 'Blog', 'urun']]],
   ['Pazarlama', [['/admin/kampanyalar', 'Kampanyalar', 'admin'], ['/admin/kuponlar', 'Kuponlar', 'admin'], ['/admin/hediye-cekleri', 'Hediye çekleri', 'admin'], ['/admin/bulten', 'Bülten aboneleri', 'admin'], ['/admin/kurumsal', 'Kurumsal talepler', 'admin']]],
-  ['Yönetim', [['/admin/raporlar', 'Kâr ve raporlar', 'admin'], ['/admin/musteriler', 'Müşteriler ve ekip', 'admin'], ['/admin/yorumlar', 'Yorumlar', 'admin'], ['/admin/ayarlar', 'Mağaza ayarları', 'admin']]],
+  ['Yönetim', [['/admin/raporlar', 'Kâr ve raporlar', 'admin'], ['/admin/defter', 'Gider-gelir defteri', 'admin'], ['/admin/musteriler', 'Müşteriler ve ekip', 'admin'], ['/admin/yorumlar', 'Yorumlar', 'admin'], ['/admin/ayarlar', 'Mağaza ayarları', 'admin'], ['/admin/hatalar', 'Site hataları', 'admin']]],
 ];
 
 export default function AdminNav({ rol }) {

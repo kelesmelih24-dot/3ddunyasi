@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { tl, tarih, TESLIMAT } from '@/lib/format';
+import WhatsAppNotify from '@/components/admin/WhatsAppNotify';
 import OrderAdmin from '@/components/admin/OrderAdmin';
 
 export default async function Page({ params }) {
@@ -12,7 +13,7 @@ export default async function Page({ params }) {
   return (
     <div className="space-y-6">
       <Link href="/admin/siparisler" className="soluk text-sm hover:underline">Siparişler</Link>
-      <div className="flex flex-wrap items-center justify-between gap-3"><h1 className="text-3xl font-semibold">{o.order_no}</h1><Link href={`/admin/siparisler/${o.id}/yazdir`} className="btn-cizgi">🖨 Etiket ve fiş yazdır</Link></div>
+      <div className="flex flex-wrap items-center justify-between gap-3"><h1 className="text-3xl font-semibold">{o.order_no}</h1><div className="flex flex-wrap gap-2"><WhatsAppNotify order={o} /><Link href={`/admin/siparisler/${o.id}/yazdir`} className="btn-cizgi">🖨 Etiket ve fiş yazdır</Link></div></div>
       <p className="soluk -mt-4">{tarih(o.created_at)} · {o.email}</p>
       <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
         <div className="space-y-6">
@@ -42,7 +43,7 @@ export default async function Page({ params }) {
             </div>
           )}
           <div className="kutu p-4 text-sm leading-6">
-            <p className="font-semibold">Teslimat adresi</p>
+            <p className="font-semibold">Teslimat adresi</p>{o.user_id && <Link href={`/admin/musteriler/${o.user_id}`} className="float-right text-xs underline">Müşteri kartı</Link>}
             <p>{a.full_name} · {a.phone}<br />{a.address}<br />{a.district} / {a.city} {a.zip}</p>
             {o.note && <p className="mt-3"><b>Müşteri notu:</b> {o.note}</p>}
           </div>

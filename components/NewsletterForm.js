@@ -1,19 +1,22 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { createClient } from '@/lib/supabase/client';
+import Turnstile from './Turnstile';
 
 export default function NewsletterForm({ koyu = false }) {
   const [email, setEmail] = useState('');
   const [onay, setOnay] = useState(false);
   const [durum, setDurum] = useState({ t: '', m: '' });
+  const [token, setToken] = useState('');
   async function gonder(e) {
     e.preventDefault();
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return setDurum({ t: 'hata', m: 'Geçerli bir e-posta adresi girin.' });
     if (!onay) return setDurum({ t: 'hata', m: 'Devam etmek için onay kutusunu işaretleyin.' });
     setDurum({ t: 'bekle', m: '' });
-    const { error } = await createClient().from('newsletter_subscribers').insert({ email: email.trim().toLowerCase() });
-    if (error && error.code !== '23505') return setDurum({ t: 'hata', m: 'Kaydedilemedi, lütfen tekrar deneyin.' });
+    const r = await fetch('/api/form', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ tur: 'bulten', veri: { email }, token, tuzak: e.target.elements.website?.value }) });
+    const d = await r.json();
+    const error = r.ok ? null : { message: d.error };
+    if (error) return setDurum({ t: 'hata', m: error.message || 'Kaydedilemedi, lütfen tekrar deneyin.' });
     setEmail('');
     setDurum({ t: 'tamam', m: 'Harika! Açılışı ve kampanyaları ilk siz duyacaksınız.' });
   }
@@ -25,6 +28,8 @@ export default function NewsletterForm({ koyu = false }) {
           className={`min-w-0 flex-1 bg-transparent px-4 text-sm focus:outline-none ${koyu ? 'text-white placeholder:text-white/60' : 'placeholder:text-lacivert-400'}`} />
         <button disabled={durum.t === 'bekle'} className="btn-ana shrink-0 px-5">{durum.t === 'bekle' ? 'Kaydediliyor' : 'Haber ver'}</button>
       </div>
+      <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
+      {onay && <Turnstile onToken={setToken} className="mt-3" />}
       <label className={`mt-3 flex items-start gap-2 text-xs leading-5 ${yazi}`}>
         <input type="checkbox" checked={onay} onChange={(e) => setOnay(e.target.checked)} className="mt-0.5 accent-nozul-500" />
         <span>Kampanya ve duyuru e-postaları almayı kabul ediyorum. <Link href="/kvkk" className="underline">KVKK metni</Link></span>

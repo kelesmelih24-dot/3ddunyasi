@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { gorselKucult } from '@/lib/gorsel';
 
 const TURLER = { atolye: 'Atölyeden fotoğraflar', instagram: 'Instagram gönderileri' };
 
@@ -19,7 +20,8 @@ export default function Page() {
     const files = [...(e.target.files || [])];
     if (!files.length) return;
     setBusy(true); setErr('');
-    for (const file of files) {
+    for (const ham of files) {
+      const file = await gorselKucult(ham);
       if (file.size > 5 * 1024 * 1024) { setErr(`${file.name} 5 MB'tan büyük`); continue; }
       const path = `galeri/${Date.now()}-${Math.random().toString(36).slice(2, 7)}.${file.name.split('.').pop().toLowerCase()}`;
       const { error } = await supabase.storage.from('urun-gorselleri').upload(path, file, { cacheControl: '31536000' });

@@ -7,6 +7,7 @@ import Intro from '@/components/Intro';
 import Analytics from '@/components/Analytics';
 import PwaRegister from '@/components/PwaRegister';
 import ChatWidget from '@/components/ChatWidget';
+import ErrorReporter from '@/components/ErrorReporter';
 import { CartProvider } from '@/components/CartProvider';
 import { getUserAndProfile } from '@/lib/supabase/server';
 import { getSettings } from '@/lib/settings';
@@ -64,6 +65,7 @@ export default async function RootLayout({ children }) {
         <a href="#icerik" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[200] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:shadow">İçeriğe geç</a>
         <Analytics />
         <PwaRegister />
+        <ErrorReporter />
         <Intro />
         <CartProvider userId={user?.id}>
           <div className="overflow-hidden bg-lacivert-800 text-xs font-semibold text-white" aria-label="Duyurular">

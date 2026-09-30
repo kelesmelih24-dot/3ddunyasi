@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { gorselKucult } from '@/lib/gorsel';
 
 function Yildiz({ n }) {
   return <span className="text-nozul-500" aria-label={`5 üzerinden ${n}`}>{'★'.repeat(n)}<span className="text-lacivert-200">{'★'.repeat(5 - n)}</span></span>;
@@ -25,7 +26,8 @@ export default function Reviews({ productId, reviews, user, canReview, authorNam
     setBusy(true);
     const supabase = createClient();
     const images = [];
-    for (const f of files) {
+    for (const ham of files) {
+      const f = await gorselKucult(ham);
       if (f.size > 5 * 1024 * 1024) { setBusy(false); return setErr(`${f.name} 5 MB'tan büyük.`); }
       const path = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2, 7)}.${f.name.split('.').pop().toLowerCase()}`;
       const { error } = await supabase.storage.from('yorum-gorselleri').upload(path, f);

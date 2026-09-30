@@ -38,7 +38,7 @@ export default function Page() {
       <div className="space-y-2 md:hidden">
         {goster.map((p) => (
           <div key={p.id} className="kutu p-4 text-sm">
-            <p className="font-semibold">{p.full_name || '-'}</p><p className="soluk">{p.email} · {p.phone || '-'}</p>
+            <a href={`/admin/musteriler/${p.id}`} className="font-semibold underline">{p.full_name || '-'}</a><p className="soluk">{p.email} · {p.phone || '-'}</p>
             <p className="mt-1">{stats[p.id]?.n || 0} sipariş · {tl(stats[p.id]?.t || 0)} · {Number(p.points || 0)} puan</p>
             <select value={p.role} onChange={(e) => rolDegis(p, e.target.value)} className="girdi mt-2 py-1.5" aria-label="Yetki">{Object.entries(ROL).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select>
           </div>
@@ -50,7 +50,7 @@ export default function Page() {
           <tbody className="divide-y divide-lacivert-100 dark:divide-lacivert-800">
             {goster.map((p) => (
               <tr key={p.id}>
-                <td className="p-3 font-semibold">{p.full_name || '-'}</td><td className="p-3">{p.email}<br /><span className="soluk">{p.phone || ''}</span></td>
+                <td className="p-3 font-semibold"><a href={`/admin/musteriler/${p.id}`} className="underline">{p.full_name || '-'}</a></td><td className="p-3">{p.email}<br /><span className="soluk">{p.phone || ''}</span></td>
                 <td className="p-3">{new Date(p.created_at).toLocaleDateString('tr-TR')}</td><td className="p-3">{stats[p.id]?.n || 0}</td>
                 <td className="p-3">{tl(stats[p.id]?.t || 0)}</td><td className="p-3">{Number(p.points || 0)}</td>
                 <td className="p-3"><select value={p.role} onChange={(e) => rolDegis(p, e.target.value)} className="girdi py-1.5" aria-label="Yetki">{Object.entries(ROL).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select></td>

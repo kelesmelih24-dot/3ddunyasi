@@ -1,7 +1,10 @@
 'use client';
 import Link from 'next/link';
+import { useEffect } from 'react';
+import { hataBildir } from '@/components/ErrorReporter';
 
-export default function Error({ reset }) {
+export default function Error({ error, reset }) {
+  useEffect(() => { hataBildir(error?.message || 'Sayfa hatası', error?.stack); }, [error]);
   return (
     <div className="kap grid min-h-[60vh] place-items-center py-20 text-center">
       <div>

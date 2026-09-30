@@ -1,17 +1,20 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { gorselKucult } from '@/lib/gorsel';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import { slugify, BOLUMLER } from '@/lib/format';
 
 const BOS = { section: 'baski', category_id: '', name: '', slug: '', description: '', price: '', compare_price: '', stock: 0, images: [],
-  sale_unit: 'adet', pack_size: 1, pack_price: '', allow_personalization: false, is_active: true, is_for_sale: true, is_featured: false, video_url: '', model_url: '', specs: [], preview_type: '', sale_ends_at: '', bundle_items: [], print_grams: '', print_hours: '', extra_cost: 0, cost_price: '', brand: '', color_hex: '', group_key: '', variant_label: '' };
+  sale_unit: 'adet', pack_size: 1, pack_price: '', allow_personalization: false, is_active: true, is_for_sale: true, is_featured: false, video_url: '', model_url: '', specs: [], preview_type: '', sale_ends_at: '', bundle_items: [], print_grams: '', print_hours: '', extra_cost: 0, cost_price: '', brand: '', color_hex: '', group_key: '', variant_label: '', filament_id: '' };
 
 export default function ProductForm({ product, categories }) {
   const router = useRouter();
   const supabase = createClient();
-  const [f, setF] = useState(product ? { ...BOS, ...product, category_id: product.category_id || '', compare_price: product.compare_price ?? '', pack_price: product.pack_price ?? '', video_url: product.video_url || '', model_url: product.model_url || '', specs: Array.isArray(product.specs) ? product.specs : [], preview_type: product.preview_type || '', sale_ends_at: product.sale_ends_at ? new Date(new Date(product.sale_ends_at) - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 16) : '', bundle_items: Array.isArray(product.bundle_items) ? product.bundle_items : [], print_grams: product.print_grams ?? '', print_hours: product.print_hours ?? '', extra_cost: product.extra_cost ?? 0, cost_price: product.cost_price ?? '', brand: product.brand || '', color_hex: product.color_hex || '', group_key: product.group_key || '', variant_label: product.variant_label || '' } : BOS);
+  const [f, setF] = useState(product ? { ...BOS, ...product, category_id: product.category_id || '', compare_price: product.compare_price ?? '', pack_price: product.pack_price ?? '', video_url: product.video_url || '', model_url: product.model_url || '', specs: Array.isArray(product.specs) ? product.specs : [], preview_type: product.preview_type || '', sale_ends_at: product.sale_ends_at ? new Date(new Date(product.sale_ends_at) - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 16) : '', bundle_items: Array.isArray(product.bundle_items) ? product.bundle_items : [], print_grams: product.print_grams ?? '', print_hours: product.print_hours ?? '', extra_cost: product.extra_cost ?? 0, cost_price: product.cost_price ?? '', brand: product.brand || '', color_hex: product.color_hex || '', group_key: product.group_key || '', variant_label: product.variant_label || '', filament_id: product.filament_id || '' } : BOS);
+  const [filamentler, setFilamentler] = useState([]);
+  useEffect(() => { supabase.from('filaments').select('id, material, color, cost_per_kg').eq('is_active', true).order('material').then(({ data }) => setFilamentler(data || [])); }, []);
   const [maliyetAyar, setMaliyetAyar] = useState({ filament_gram_cost: 0.8, printer_hour_cost: 12 });
   useEffect(() => { supabase.from('settings').select('filament_gram_cost, printer_hour_cost').eq('id', 1).single().then(({ data }) => data && setMaliyetAyar(data)); }, []);
   const hesapMaliyet = (Number(f.print_grams) || 0) * maliyetAyar.filament_gram_cost + (Number(f.print_hours) || 0) * maliyetAyar.printer_hour_cost + (Number(f.extra_cost) || 0);
@@ -29,7 +32,8 @@ export default function ProductForm({ product, categories }) {
     if (!files.length) return;
     setUploading(true);
     const urls = [];
-    for (const file of files) {
+    for (const ham of files) {
+      const file = await gorselKucult(ham);
       if (file.size > 5 * 1024 * 1024) { setErr(`${file.name} 5 MB'tan büyük`); continue; }
       const path = `${Date.now()}-${slugify(file.name.replace(/\.[^.]+$/, ''))}.${file.name.split('.').pop()}`;
       const { error } = await supabase.storage.from('urun-gorselleri').upload(path, file, { cacheControl: '31536000' });
@@ -71,6 +75,7 @@ export default function ProductForm({ product, categories }) {
       video_url: f.video_url.trim() || null, model_url: f.model_url.trim() || null,
       specs: f.specs.filter((x) => x.ad?.trim() && x.deger?.trim()),
       sale_ends_at: f.sale_ends_at ? new Date(f.sale_ends_at).toISOString() : null,
+      filament_id: f.filament_id || null,
       brand: f.brand.trim() || null, color_hex: f.color_hex || null, group_key: f.group_key.trim() || null, variant_label: f.variant_label.trim() || null,
       print_grams: f.print_grams === '' ? null : Number(f.print_grams), print_hours: f.print_hours === '' ? null : Number(f.print_hours),
       extra_cost: Number(f.extra_cost) || 0, cost_price: f.cost_price === '' ? (hesapMaliyet > 0 ? +hesapMaliyet.toFixed(2) : null) : Number(f.cost_price),
@@ -161,6 +166,7 @@ export default function ProductForm({ product, categories }) {
       <section className="kutu space-y-3 p-5">
         <h2 className="font-sans font-semibold">Maliyet ve kâr</h2>
         <div className="grid gap-3 sm:grid-cols-4">
+          <div className="sm:col-span-4"><label className="etiket" htmlFor="fil">Basıldığı filament (baskı bitince stoktan düşer)</label><select id="fil" className="girdi" value={f.filament_id} onChange={set('filament_id')}><option value="">Seçilmedi</option>{filamentler.map((x) => <option key={x.id} value={x.id}>{x.material} · {x.color}</option>)}</select></div>
           <div><label className="etiket" htmlFor="pg">Filament (gram)</label><input id="pg" type="number" step="0.1" className="girdi" value={f.print_grams} onChange={set('print_grams')} /></div>
           <div><label className="etiket" htmlFor="ph">Baskı süresi (saat)</label><input id="ph" type="number" step="0.1" className="girdi" value={f.print_hours} onChange={set('print_hours')} /></div>
           <div><label className="etiket" htmlFor="ec">Ek maliyet (TL)</label><input id="ec" type="number" step="0.01" className="girdi" value={f.extra_cost} onChange={set('extra_cost')} /></div>

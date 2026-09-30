@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { slugify } from '@/lib/format';
 import { markdown } from '@/lib/markdown';
+import { gorselKucult } from '@/lib/gorsel';
 
 const BOS = { title: '', slug: '', excerpt: '', content: '', cover: '', is_published: false };
 
@@ -16,13 +17,13 @@ export default function Page() {
   useEffect(() => { load(); }, []);
   const set = (k) => (e) => setF({ ...f, [k]: e.target.type === 'checkbox' ? e.target.checked : e.target.value });
   async function kapak(e) {
-    const file = e.target.files?.[0]; if (!file) return;
+    const ham = e.target.files?.[0]; if (!ham) return; const file = await gorselKucult(ham);
     const path = `blog/${Date.now()}-${slugify(file.name.replace(/\.[^.]+$/, ''))}.${file.name.split('.').pop()}`;
     const { error } = await supabase.storage.from('urun-gorselleri').upload(path, file);
     if (!error) setF((p) => ({ ...p, cover: supabase.storage.from('urun-gorselleri').getPublicUrl(path).data.publicUrl }));
   }
   async function gorselEkle(e) {
-    const file = e.target.files?.[0]; if (!file) return;
+    const ham = e.target.files?.[0]; if (!ham) return; const file = await gorselKucult(ham);
     const path = `blog/${Date.now()}-${slugify(file.name.replace(/\.[^.]+$/, ''))}.${file.name.split('.').pop()}`;
     const { error } = await supabase.storage.from('urun-gorselleri').upload(path, file);
     if (!error) setF((p) => ({ ...p, content: `${p.content}\n\n![](${supabase.storage.from('urun-gorselleri').getPublicUrl(path).data.publicUrl})\n` }));

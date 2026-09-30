@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import Turnstile, { turnstileAktif } from './Turnstile';
 
 export default function AuthForm({ mode }) {
   const kayit = mode === 'kayit';
@@ -13,6 +14,9 @@ export default function AuthForm({ mode }) {
   const [err, setErr] = useState(sp.get('hata') ? 'Giriş yapılamadı, tekrar deneyin.' : '');
   const [ok, setOk] = useState('');
   const [busy, setBusy] = useState(false);
+  const [token, setToken] = useState('');
+  const [tsAnahtar, setTsAnahtar] = useState(0);
+  const yenile = () => { setToken(''); setTsAnahtar((n) => n + 1); };
   const supabase = createClient();
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
 
@@ -22,18 +26,19 @@ export default function AuthForm({ mode }) {
     if (kayit && f.name.trim().length < 3) return setErr('Adınızı ve soyadınızı girin.');
     if (!/\S+@\S+\.\S+/.test(f.email)) return setErr('Geçerli bir e-posta adresi girin.');
     if (f.password.length < 8) return setErr('Şifre en az 8 karakter olmalı.');
+    if (turnstileAktif && !token) return setErr('Lütfen robot doğrulamasının tamamlanmasını bekleyin.');
     setBusy(true);
     if (kayit) {
       const { data, error } = await supabase.auth.signUp({
         email: f.email, password: f.password,
-        options: { data: { full_name: f.name.trim() }, emailRedirectTo: `${origin}/auth/callback?sonra=${sonra}` },
+        options: { captchaToken: token || undefined, data: { full_name: f.name.trim() }, emailRedirectTo: `${origin}/auth/callback?sonra=${sonra}` },
       });
-      setBusy(false);
+      setBusy(false); yenile();
       if (error) return setErr(error.message.includes('registered') ? 'Bu e-posta ile zaten bir hesap var.' : error.message);
       if (!data.session) return setOk('Hesabınız oluşturuldu. E-postanıza gelen bağlantıya tıklayarak hesabınızı doğrulayın.');
     } else {
-      const { error } = await supabase.auth.signInWithPassword({ email: f.email, password: f.password });
-      setBusy(false);
+      const { error } = await supabase.auth.signInWithPassword({ email: f.email, password: f.password, options: { captchaToken: token || undefined } });
+      setBusy(false); yenile();
       if (error) return setErr('E-posta veya şifre hatalı.');
     }
     router.push(sonra);
@@ -62,6 +67,7 @@ export default function AuthForm({ mode }) {
           <input id="sf" type="password" className="girdi" value={f.password} onChange={(e) => setF({ ...f, password: e.target.value })} autoComplete={kayit ? 'new-password' : 'current-password'} />
         </div>
         {kayit && <p className="soluk text-xs leading-5">Üye olarak <Link href="/kvkk" className="underline">KVKK aydınlatma metnini</Link> okuduğunuzu kabul etmiş olursunuz.</p>}
+        <Turnstile key={tsAnahtar} onToken={setToken} />
         {err && <p className="hata">{err}</p>}
         {ok && <p className="basari">{ok}</p>}
         <button disabled={busy} className="btn-ana w-full">{busy ? 'Lütfen bekleyin…' : kayit ? 'Hesap oluştur' : 'Giriş yap'}</button>

@@ -1,19 +1,19 @@
 'use client';
 import { useState } from 'react';
-import { createClient } from '@/lib/supabase/client';
+import Turnstile from '@/components/Turnstile';
 
 export default function Page() {
   const [f, setF] = useState({ company: '', full_name: '', email: '', phone: '', quantity: '', details: '' });
   const [durum, setDurum] = useState('');
+  const [token, setToken] = useState('');
   const set = (k) => (e) => { setF({ ...f, [k]: e.target.value }); setDurum(''); };
   async function gonder(e) {
     e.preventDefault();
     if (!f.company.trim() || !f.full_name.trim()) return setDurum('hata:Firma ve yetkili adını girin.');
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email)) return setDurum('hata:Geçerli bir e-posta adresi girin.');
     if (f.details.trim().length < 10) return setDurum('hata:İhtiyacınızı biraz daha detaylı anlatın.');
-    const { data, error } = await createClient().from('corporate_requests').insert(f).select('id').single();
-    if (error) return setDurum('hata:Gönderilemedi, tekrar deneyin.');
-    fetch('/api/kurumsal', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: data.id }) });
+    const r = await fetch('/api/form', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ tur: 'kurumsal', veri: f, token, tuzak: e.target.elements.website?.value }) });
+    if (!r.ok) return setDurum('hata:' + ((await r.json()).error || 'Gönderilemedi, tekrar deneyin.'));
     setDurum('tamam');
   }
   return (
@@ -38,6 +38,8 @@ export default function Page() {
           </div>
           <div><label className="etiket" htmlFor="q">Tahmini adet</label><input id="q" className="girdi" value={f.quantity} onChange={set('quantity')} placeholder="Örnek: 500" /></div>
           <div><label className="etiket" htmlFor="d">İhtiyacınız</label><textarea id="d" rows={5} className="girdi" value={f.details} onChange={set('details')} placeholder="Ürün, ölçü, renk, logo, teslim tarihi…" /></div>
+          <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
+          <Turnstile onToken={setToken} />
           {durum.startsWith('hata:') && <p className="hata">{durum.slice(5)}</p>}
           <button className="btn-ana w-full py-3">Teklif iste</button>
         </form>
